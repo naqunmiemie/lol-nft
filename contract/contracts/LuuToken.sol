@@ -20,15 +20,33 @@ contract LuuToken is ERC20, Pausable, Ownable {
         _mint(to, amount);
     }
 
-    function _beforeTokenTransfer(address from, address to, uint256 amount)
-        internal
-        whenNotPaused
-        override
-    {
+    function _beforeTokenTransfer(
+        address from,
+        address to,
+        uint256 amount
+    ) internal override whenNotPaused {
         super._beforeTokenTransfer(from, to, amount);
     }
 
-    function buyLuuToken() public {
-        
+    function buyLuuTokenByEth() public payable {
+        require(msg.value >= 0.0001 ether, "You must pay at least 1 ETH per cupcake");
+        _mint(msg.sender, msg.value);
     }
+
+    function withdrawEth() public payable onlyOwner {
+        payable(msg.sender).transfer(address(this).balance);
+    }
+
+    function buyLuuTokenByUsdt(uint256 amount) public {
+        require(amount > 1);
+        IERC20 usdcContract = IERC20(0xD9BA894E0097f8cC2BBc9D24D308b98e36dc6D02);
+        usdcContract.transferFrom(msg.sender, address(this), amount);
+        _mint(msg.sender, amount);
+    }
+
+    function withdrawUsdt(uint256 amount) public onlyOwner {
+        IERC20 usdcContract = IERC20(0xD9BA894E0097f8cC2BBc9D24D308b98e36dc6D02);
+        usdcContract.transfer(msg.sender, amount);
+    }
+
 }
