@@ -1,14 +1,15 @@
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
+
+
 </script>
 
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
   <div>
-    <router-link to="/owner">owner Page</router-link>
-    
-    <router-link to="/user">user Page</router-link>
+    <router-link to="/user">User Page</router-link>
+    <span> &emsp;/&emsp;</span>
+    <router-link to="/owner">Owner Page</router-link>
+
   </div>
   <router-view></router-view>
 </template>
