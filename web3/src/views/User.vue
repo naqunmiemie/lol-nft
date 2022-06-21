@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { Ref, ref } from 'vue'
 import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers';
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import { usdtAbi, usdtAddress } from '../../../contract/src/abis/usdtAbi';
+import { LuuToken } from '../../../contract/src/types/contracts/LuuToken';
+import { LuuToken__factory } from '../../../contract/src/types/factories/contracts/LuuToken__factory';
 
 var provider: Web3Provider;
 var signer: JsonRpcSigner;
 var account: Ref<string> = ref("");
+var luuTokenAddress: string = "";
 
 
 async function connectMetamask(): Promise<boolean> {
@@ -17,7 +20,7 @@ async function connectMetamask(): Promise<boolean> {
         return false;
     }
 
-    // provider = new ethers.providers.Web3Provider(window.ethereum)
+    provider = new ethers.providers.Web3Provider(window.ethereum)
 
     const accounts = <string[]>await provider.send("eth_requestAccounts", []);
     if (accounts.length !== 0) {
@@ -31,9 +34,14 @@ async function connectMetamask(): Promise<boolean> {
     }
 }
 
-async function getBalanceOfLtk() {
-
-
+async function getBalanceOfLtk(): Promise<BigNumber | null>{
+    if (provider !== undefined && signer !== undefined && account.value !== "") {
+        const luuTokenContract = new ethers.Contract(luuTokenAddress, LuuToken__factory.abi, signer) as LuuToken;
+        return await luuTokenContract.balanceOf(account.value)
+    } else {
+        console.log('Please connect MetaMask!');
+        return null;
+    }
 }
 
 

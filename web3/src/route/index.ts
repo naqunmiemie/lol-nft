@@ -1,11 +1,11 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import UserVue from "../views/User.vue";
 import OwnerVue from "../views/Owner.vue";
+import Layout from "../layout/index.vue"
 
-export const router = createRouter({
+const router = createRouter({
   history: createWebHashHistory(),
   routes: [
-    { path: "/user", component: UserVue },
+    { path: "/", component: Layout },
     { path: "/owner", component: OwnerVue },
   ],
 });
