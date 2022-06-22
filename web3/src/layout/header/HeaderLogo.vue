@@ -6,22 +6,20 @@
 </template>
 <style lang="scss" scoped>
 .logo{
-  background-color: #2b2f3a;
-  height: 50px;
-  border:none;
-  line-height: 50px;
   display: flex;
   align-items: center;
   padding-left: 15px;
   color: #fff;
+  height:100%;
   img{
-    width: 30px;
+    height: 90%;
     margin-right: 12px;
   }
   span{
     font-weight: 600;
     line-height: 50px;
     font-size: 16px;
+    color: #000;
     font-family: Avenir,Helvetica Neue,Arial,Helvetica, sans-serif;
     vertical-align: middle;
   }
