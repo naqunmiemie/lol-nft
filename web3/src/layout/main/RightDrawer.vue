@@ -7,7 +7,7 @@
 
     <el-tooltip content="copy" placement="top">
       <el-card class="copyAccount" shadow="hover" @click="copyAccount()"> <span>Account:</span>
-        <span>{`${store.account.substring(0,4)}`}</span>
+        <span>{{`${store.account.substring(0,4)}...${store.account.substring(store.account.length-4)}`}}</span>
       </el-card>
     </el-tooltip>
 
@@ -35,7 +35,6 @@ async function connectMetamask(): Promise<boolean> {
     console.log('Please install MetaMask!');
     ElMessage('Please install MetaMask!')
     return false;
-    `${store.account.substring(0,4)}`
   }
 
   store.provider = new ethers.providers.Web3Provider(window.ethereum)
