@@ -6,8 +6,11 @@
     </el-card>
 
     <el-tooltip content="copy" placement="top">
-      <el-card class="copyAccount" shadow="hover" @click="copyAccount()"> <span>Account:</span>
-        <span>{{`${store.account.substring(0,4)}...${store.account.substring(store.account.length-4)}`}}</span>
+      <el-card class="copyAccount" shadow="hover" @click="copyAccount()">
+        <span>Account:</span>
+        <span class="account">{{ `${store.account.substring(0, 4)}...${store.account.substring(store.account.length -
+            4)}`
+        }}</span>
       </el-card>
     </el-tooltip>
 
@@ -47,14 +50,23 @@ async function connectMetamask(): Promise<boolean> {
     return true;
   } else {
     console.log(`no authorized accoutn found`);
-    ElMessage('no authorized accoutn found')
+    ElMessage({ message: 'no authorized accoutn found', type: 'warning' })
     return false;
   }
 }
 
-
 async function copyAccount() {
   await navigator.clipboard.writeText(store.account)
+}
+
+async function getBalanceOfLtk(): Promise<BigNumber | null> {
+  if (store.provider && store.signer && store.account !== "") {
+    const luuTokenContract = new ethers.Contract(luuTokenAddress, LuuToken__factory.abi, store.signer) as LuuToken;
+    return await luuTokenContract.balanceOf(store.account)
+  } else {
+    console.log('Please connect MetaMask!');
+    return null;
+  }
 }
 
 </script>
@@ -67,6 +79,10 @@ async function copyAccount() {
 
 .copyAccount {
   cursor: pointer;
+}
+
+.account {
+  float: right;
 }
 
 .net {
