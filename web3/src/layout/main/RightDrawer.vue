@@ -1,5 +1,5 @@
 <template>
-  <el-drawer class="drawer" v-model="store.drawer" title="My wallet" direction="rtl" color="black">
+  <el-drawer v-model="store.drawer" title="My wallet" direction="rtl" @open="openDrawer()">
     <el-card class="connectMetamask" shadow="hover" @click="connectMetamask()">
       <span>MetaMask</span>
       <span class="net">please choose rinkeby</span>
@@ -16,7 +16,7 @@
 
 
     <div class="balance">
-      <el-card shadow="never"> <span>LuuToken</span> <span class="sum">0</span></el-card>
+      <el-card shadow="never"> <span>LuuToken</span> <span class="sum">{{ store.LuuTokenBalance }}</span></el-card>
       <el-card shadow="never"> <span>ETH</span> <span class="sum">0</span></el-card>
       <el-card shadow="never"> <span>USDT</span> <span class="sum">0</span></el-card>
     </div>
@@ -25,9 +25,11 @@
 </template>
 
 <script lang="ts" setup>
-import { useStore } from '../../store/index';
+import { LuuTokenAddress, provider, signer, useStore } from '../../store/index';
 import { BigNumber, ethers } from "ethers";
-import { ElMessage } from 'element-plus'
+import { ElMessage } from 'element-plus';
+import { LuuToken__factory } from '../../../../contract/src/types/factories/contracts/LuuToken__factory';
+import { LuuToken } from '../../../../contract/src/types/contracts/LuuToken';
 
 const store = useStore()
 
@@ -40,12 +42,13 @@ async function connectMetamask(): Promise<boolean> {
     return false;
   }
 
-  store.provider = new ethers.providers.Web3Provider(window.ethereum)
+  provider = new ethers.providers.Web3Provider(window.ethereum)
+  console.log(await provider.getBlockNumber());
 
   const accounts = <string[]>await store.provider.send("eth_requestAccounts", []);
-  if (store.provider && accounts.length !== 0) {
+  if (provider && accounts.length !== 0) {
     store.account = accounts[0];
-    store.signer = store.provider.getSigner()
+    signer = provider.getSigner()
     console.log(`account:${accounts[0]}`);
     return true;
   } else {
@@ -59,14 +62,25 @@ async function copyAccount() {
   await navigator.clipboard.writeText(store.account)
 }
 
-async function getBalanceOfLtk(): Promise<BigNumber | null> {
-  if (store.provider && store.signer && store.account !== "") {
-    const luuTokenContract = new ethers.Contract(luuTokenAddress, LuuToken__factory.abi, store.signer) as LuuToken;
-    return await luuTokenContract.balanceOf(store.account)
+async function getBalanceOfLtk() {
+  if (provider && signer && store.account !== "") {
+    const luuTokenContract = new ethers.Contract(LuuTokenAddress, LuuToken__factory.abi, store.signer) as LuuToken;
+    console.log(store.account);
+    // await store.provider.getBlockNumber()
+    // console.log(await store.provider.getBlockNumber());
+    // await luuTokenContract.balanceOf("0xda4d32877a70f3a4490008df66f2dd988451a431")
+
+    // const abc = (await luuTokenContract.balanceOf(store.account)).toNumber
+    // console.log("type" + typeof (abc));
   } else {
     console.log('Please connect MetaMask!');
-    return null;
   }
+}
+
+function openDrawer() {
+  console.log("openDrawer");
+  getBalanceOfLtk()
+
 }
 
 </script>

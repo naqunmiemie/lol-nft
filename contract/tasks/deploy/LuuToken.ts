@@ -1,26 +1,22 @@
-import { ethers, upgrades } from "hardhat";
 import { task } from "hardhat/config";
-import type { TaskArguments } from "hardhat/types";
+import type { HardhatRuntimeEnvironment, RunSuperFunction, TaskArguments } from "hardhat/types";
 
-// task("deploy:LuuToken").setAction(async function (taskArguments: TaskArguments, { ethers }) {
-//   console.log("LuuToken deployed to:");
+export const LuuTokenAddress = "0x756C577C1489EE3390FF010028FFd9c57329ce20";
 
-//   const LuuToken = await ethers.getContractFactory("LuuToken");
-//   const luuToken = await upgrades.deployProxy(LuuToken);
-//   await luuToken.deployed();
-//   console.log("LuuToken deployed to:", luuToken.address);
-// });
+task("deploy:LuuToken").setAction(
+  async (taskArgs: TaskArguments, hre: HardhatRuntimeEnvironment, runSuper: RunSuperFunction<any>) => {
+    const LuuToken = await hre.ethers.getContractFactory("LuuToken");
+    const luuToken = await hre.upgrades.deployProxy(LuuToken);
+    await luuToken.deployed();
+    console.log("LuuToken deployed to:", luuToken.address);
+  },
+);
 
-async function main() {
 
-  const LuuToken = await ethers.getContractFactory("LuuToken")
-  console.log("Deploying Box...")
-  const luuToken = await upgrades.deployProxy(LuuToken)
-  console.log(luuToken.address," luuToken(proxy) address")  
-}
-
-main().catch((error) => {
-  console.error(error)
-  process.exitCode = 1
-})
-
+task("upgrade:LuuToken").setAction(
+  async (taskArgs: TaskArguments, hre: HardhatRuntimeEnvironment, runSuper: RunSuperFunction<any>) => {
+    const LuuToken = await hre.ethers.getContractFactory("LuuToken");
+    const luuToken = await hre.upgrades.upgradeProxy(LuuTokenAddress, LuuToken);
+    console.log("LuuToken upgraded");
+  },
+);

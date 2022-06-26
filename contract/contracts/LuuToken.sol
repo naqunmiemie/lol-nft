@@ -1,13 +1,24 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/security/Pausable.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-contract LuuToken is ERC20, Pausable, Ownable {
-    constructor() ERC20("LuuToken", "LTK") {}
+contract LuuToken is Initializable, ERC20Upgradeable, PausableUpgradeable, OwnableUpgradeable, UUPSUpgradeable {
+    function initialize() public initializer {
+        __ERC20_init("LuuToken", "LTK");
+        __Pausable_init();
+        __Ownable_init();
+        __UUPSUpgradeable_init();
+    }
 
+    //onlyOwner
+    //onlyOwner
+    //onlyOwner
     function pause() public onlyOwner {
         _pause();
     }
@@ -20,28 +31,8 @@ contract LuuToken is ERC20, Pausable, Ownable {
         _mint(to, amount);
     }
 
-    function _beforeTokenTransfer(
-        address from,
-        address to,
-        uint256 amount
-    ) internal override whenNotPaused {
-        super._beforeTokenTransfer(from, to, amount);
-    }
-
-    function buyLuuTokenByEth() public payable {
-        require(msg.value >= 0.0001 ether, "You must pay at least 1 ETH per cupcake");
-        _mint(msg.sender, msg.value);
-    }
-
     function withdrawEth() public payable onlyOwner {
         payable(msg.sender).transfer(address(this).balance);
-    }
-
-    function buyLuuTokenByUsdt(uint256 amount) public {
-        require(amount > 1);
-        IERC20 usdcContract = IERC20(0xD9BA894E0097f8cC2BBc9D24D308b98e36dc6D02);
-        usdcContract.transferFrom(msg.sender, address(this), amount);
-        _mint(msg.sender, amount);
     }
 
     function withdrawUsdt(uint256 amount) public onlyOwner {
@@ -49,4 +40,23 @@ contract LuuToken is ERC20, Pausable, Ownable {
         usdcContract.transfer(msg.sender, amount);
     }
 
+    //internal
+    //internal
+    //internal
+    function _authorizeUpgrade(address newImplementation) internal virtual override {}
+
+    //public
+    //public
+    //public
+    function buyLuuTokenByEth() public payable {
+        require(msg.value >= 0.0001 ether, "You must pay at least 0.0001 eth");
+        _mint(msg.sender, msg.value);
+    }
+
+    function buyLuuTokenByUsdt(uint256 amount) public {
+        require(amount > 1, "You must pay at least 1 Usdt");
+        IERC20 usdcContract = IERC20(0xD9BA894E0097f8cC2BBc9D24D308b98e36dc6D02);
+        usdcContract.transferFrom(msg.sender, address(this), amount);
+        _mint(msg.sender, amount);
+    }
 }
