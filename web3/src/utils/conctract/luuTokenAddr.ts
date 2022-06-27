@@ -1,0 +1,1 @@
+export const LuuTokenAddress = "0x756C577C1489EE3390FF010028FFd9c57329ce20";

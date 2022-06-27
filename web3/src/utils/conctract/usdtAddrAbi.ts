@@ -1,5 +1,5 @@
-export const usdtAddress = "0xD9BA894E0097f8cC2BBc9D24D308b98e36dc6D02";
-export const usdtAbi = [
+export const UsdtAddress = "0xD9BA894E0097f8cC2BBc9D24D308b98e36dc6D02";
+export const UsdtAbi = [
   {
     inputs: [
       { internalType: "uint256", name: "_initialAmount", type: "uint256" },

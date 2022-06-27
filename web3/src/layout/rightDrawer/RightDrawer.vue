@@ -16,23 +16,29 @@
       </el-card>
     </el-tooltip>
 
-
     <div class="balance">
-      <el-card shadow="never"> <span>LuuToken</span> <span class="sum">{{ store.luuTokenBalance }}</span></el-card>
-      <el-card shadow="never"> <span>ETH</span> <span class="sum">{{ store.ethBalance }}</span></el-card>
-      <el-card shadow="never"> <span>USDT</span> <span class="sum">{{ store.usdtBalance }}</span></el-card>
+      <el-card shadow="never"> <span>LuuToken</span> <span class="sum">{{ store.luuTokenBalanceStr }}</span></el-card>
+      <el-card shadow="never"> <span>ETH</span> <span class="sum">{{ store.ethBalanceStr }}</span></el-card>
+      <el-card shadow="never"> <span>USDT</span> <span class="sum">{{ store.usdtBalanceStr }}</span></el-card>
     </div>
+
+    <el-button color="#626aef" class="buyLuuTokenButton" @click="store.buyLuuTokenDialog = true">Buy LuuToken</el-button>
   </el-drawer>
 
+  <BuyLuuTokenDialog></BuyLuuTokenDialog>
 </template>
 
 <script lang="ts" setup>
-import { LuuTokenAddress, useStore } from '../../store/index';
-import { BigNumber, ethers } from "ethers";
 import { ElMessage } from 'element-plus';
-import { LuuToken__factory } from '../../../../contract/src/types/factories/contracts/LuuToken__factory';
-import { LuuToken } from '../../../../contract/src/types/contracts/LuuToken';
+import { ethers } from "ethers";
 import { markRaw } from 'vue';
+import { LuuToken } from '../../../../contract/src/types/contracts/LuuToken';
+import { LuuToken__factory } from '../../../../contract/src/types/factories/contracts/LuuToken__factory';
+import { useStore } from '../../store/index';
+import { LuuTokenAddress } from '../../utils/conctract/luuTokenAddr';
+import { UsdtAddress, UsdtAbi } from '../../utils/conctract/usdtAddrAbi';
+import { ERC20 } from '../../../../contract/src/types/@openzeppelin/contracts/token/ERC20/ERC20';
+import BuyLuuTokenDialog from './BuyLuuTokenDialog.vue';
 
 const store = useStore()
 
@@ -68,12 +74,13 @@ async function copyAccount() {
 function getBalance() {
   getBalanceOfEth()
   getBalanceOfLtk()
+  getBalanceOfUsdt()
 }
 
 async function getBalanceOfLtk() {
   if (store.provider && store.signer && store.account !== "") {
     const luuTokenContract = new ethers.Contract(LuuTokenAddress, LuuToken__factory.abi, store.signer) as LuuToken;
-    await luuTokenContract.balanceOf("0xda4d32877a70f3a4490008df66f2dd988451a431")
+    await luuTokenContract.balanceOf(store.account)
     store.luuTokenBalance = (await luuTokenContract.balanceOf(store.account)).toString()
   } else {
     console.log('Please connect MetaMask!');
@@ -83,6 +90,16 @@ async function getBalanceOfLtk() {
 async function getBalanceOfEth() {
   if (store.provider && store.signer && store.account !== "") {
     store.ethBalance = (await store.provider.getBalance(store.account)).toString();
+  } else {
+    console.log('Please connect MetaMask!');
+  }
+}
+
+async function getBalanceOfUsdt() {
+  if (store.provider && store.signer && store.account !== "") {
+    const usdtContract = new ethers.Contract(UsdtAddress, UsdtAbi, store.signer) as ERC20;
+    await usdtContract.balanceOf(store.account)
+    store.usdtBalance = (await usdtContract.balanceOf(store.account)).toString()
   } else {
     console.log('Please connect MetaMask!');
   }
@@ -121,5 +138,9 @@ function openDrawer() {
   .sum {
     float: right;
   }
+}
+
+.buyLuuTokenButton{
+  margin-top: 30px;
 }
 </style>
