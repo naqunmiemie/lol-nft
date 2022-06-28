@@ -18,14 +18,20 @@
 
     <div class="balance">
       <el-card shadow="never"> <span>LuuToken</span> <span class="sum">{{ store.luuTokenBalanceStr }}</span></el-card>
-      <el-card shadow="never"> <span>ETH</span> <span class="sum">{{ store.ethBalanceStr }}</span></el-card>
-      <el-card shadow="never"> <span>USDT</span> <span class="sum">{{ store.usdtBalanceStr }}</span></el-card>
+      <el-card shadow="hover" @click="store.buyLtkByEthDialog = true"> <span>ETH</span> <span class="sum">{{
+          store.ethBalanceStr
+      }}</span></el-card>
+      <el-card shadow="hover" @click="store.buyLtkByUsdtDialog = true"> <span>USDT</span> <span class="sum">{{
+          store.usdtBalanceStr
+      }}</span></el-card>
     </div>
 
-    <el-button color="#626aef" class="buyLuuTokenButton" @click="store.buyLuuTokenDialog = true">Buy LuuToken</el-button>
   </el-drawer>
 
-  <BuyLuuTokenDialog></BuyLuuTokenDialog>
+  <BuyLtkByEthDialog></BuyLtkByEthDialog>
+  <BuyLtkByUsdtDialog></BuyLtkByUsdtDialog>
+
+
 </template>
 
 <script lang="ts" setup>
@@ -38,7 +44,8 @@ import { useStore } from '../../store/index';
 import { LuuTokenAddress } from '../../utils/conctract/luuTokenAddr';
 import { UsdtAddress, UsdtAbi } from '../../utils/conctract/usdtAddrAbi';
 import { ERC20 } from '../../../../contract/src/types/@openzeppelin/contracts/token/ERC20/ERC20';
-import BuyLuuTokenDialog from './BuyLuuTokenDialog.vue';
+import BuyLtkByEthDialog from './BuyLtkByEthDialog.vue';
+import BuyLtkByUsdtDialog from './BuyLtkByUsdtDialog.vue';
 
 const store = useStore()
 
@@ -46,7 +53,6 @@ async function connectMetamask(): Promise<boolean> {
   if (typeof window.ethereum !== 'undefined') {
     console.log('MetaMask is installed!');
   } else {
-    console.log('Please install MetaMask!');
     ElMessage('Please install MetaMask!')
     return false;
   }
@@ -84,6 +90,7 @@ async function getBalanceOfLtk() {
     store.luuTokenBalance = (await luuTokenContract.balanceOf(store.account)).toString()
   } else {
     console.log('Please connect MetaMask!');
+    ElMessage({ message: 'Please connect MetaMask!' })
   }
 }
 
@@ -92,6 +99,7 @@ async function getBalanceOfEth() {
     store.ethBalance = (await store.provider.getBalance(store.account)).toString();
   } else {
     console.log('Please connect MetaMask!');
+    ElMessage({ message: 'Please connect MetaMask!' })
   }
 }
 
@@ -102,13 +110,13 @@ async function getBalanceOfUsdt() {
     store.usdtBalance = (await usdtContract.balanceOf(store.account)).toString()
   } else {
     console.log('Please connect MetaMask!');
+    ElMessage({ message: 'Please connect MetaMask!' })
   }
 }
 
 function openDrawer() {
   console.log("openDrawer");
   getBalance()
-
 }
 
 </script>
@@ -140,7 +148,7 @@ function openDrawer() {
   }
 }
 
-.buyLuuTokenButton{
+.buyLuuTokenButton {
   margin-top: 30px;
 }
 </style>

@@ -5,6 +5,7 @@ import { BigNumber, ethers } from "ethers";
 import { usdtAbi, usdtAddress } from '../../../contract/src/abis/usdtAbi';
 import { LuuToken } from '../../../contract/src/types/contracts/LuuToken';
 import { LuuToken__factory } from '../../../contract/src/types/factories/contracts/LuuToken__factory';
+import { ElMessage } from 'element-plus';
 
 var provider: Web3Provider;
 var signer: JsonRpcSigner;
@@ -16,7 +17,7 @@ async function connectMetamask(): Promise<boolean> {
     if (typeof window.ethereum !== 'undefined') {
         console.log('MetaMask is installed!');
     } else {
-        console.log('Please install MetaMask!');
+        ElMessage('Please install MetaMask!')
         return false;
     }
 
@@ -34,7 +35,7 @@ async function connectMetamask(): Promise<boolean> {
     }
 }
 
-async function getBalanceOfLtk(): Promise<BigNumber | null>{
+async function getBalanceOfLtk(): Promise<BigNumber | null> {
     if (provider !== undefined && signer !== undefined && account.value !== "") {
         const luuTokenContract = new ethers.Contract(luuTokenAddress, LuuToken__factory.abi, signer) as LuuToken;
         return await luuTokenContract.balanceOf(account.value)

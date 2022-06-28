@@ -12,7 +12,8 @@ export const useStore = defineStore(APP_STORE, {
     usdtBalance: "",
     provider: null as Web3Provider | null,
     signer: null as JsonRpcSigner | null,
-    buyLuuTokenDialog: false,
+    buyLtkByEthDialog: false,
+    buyLtkByUsdtDialog: false,
   }),
   getters: {
     luuTokenBalanceStr: (state) => decimals18todecimals4(state.luuTokenBalance),

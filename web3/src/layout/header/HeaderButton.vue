@@ -13,7 +13,7 @@ import { useStore } from '../../store/index';
 const store = useStore()
 
 function clickWallet() {
-    store.drawer = !store.drawer
+    store.drawer = true
 }
 
 
