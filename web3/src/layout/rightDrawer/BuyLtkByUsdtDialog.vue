@@ -31,13 +31,19 @@ const num = ref(0.0001)
 
 async function buyLtkByUsdt() {
   if (store.provider && store.signer && store.account !== "") {
-    console.log("start approve");
     const usdtContract = new ethers.Contract(UsdtAddress, UsdtAbi, store.signer) as ERC20;
+    
+    // usdtContract.once("Approval", async (owner, spender, value) => {
+    //   if (spender === LuuTokenAddress) {
+    //     const luuTokenContract = new ethers.Contract(LuuTokenAddress, LuuToken__factory.abi, store.signer) as LuuToken;
+    //     await luuTokenContract.buyLuuTokenByUsdt(value)
+    //   }
+
+    // });
+
     await usdtContract.approve(LuuTokenAddress, num.value * (10 ** 18))
-    console.log("approve over");
-    const luuTokenContract = new ethers.Contract(LuuTokenAddress, LuuToken__factory.abi, store.signer) as LuuToken;
-    await luuTokenContract.buyLuuTokenByUsdt(num.value * (10 ** 18))
-    console.log("transaction over");
+
+
   } else {
     console.log('Please connect MetaMask!');
     ElMessage({ message: 'Please connect MetaMask!' })

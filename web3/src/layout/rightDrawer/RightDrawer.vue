@@ -62,7 +62,7 @@ async function connectMetamask(): Promise<boolean> {
   const accounts = <string[]>await store.provider.send("eth_requestAccounts", []);
   if (store.provider && accounts.length !== 0) {
     store.account = accounts[0];
-    store.signer = store.provider.getSigner()
+    store.signer = markRaw(store.provider.getSigner())
     console.log(`account:${accounts[0]}`);
     getBalance();
     return true;
@@ -90,7 +90,6 @@ async function getBalanceOfLtk() {
     store.luuTokenBalance = (await luuTokenContract.balanceOf(store.account)).toString()
   } else {
     console.log('Please connect MetaMask!');
-    ElMessage({ message: 'Please connect MetaMask!' })
   }
 }
 
@@ -99,7 +98,6 @@ async function getBalanceOfEth() {
     store.ethBalance = (await store.provider.getBalance(store.account)).toString();
   } else {
     console.log('Please connect MetaMask!');
-    ElMessage({ message: 'Please connect MetaMask!' })
   }
 }
 
@@ -110,7 +108,6 @@ async function getBalanceOfUsdt() {
     store.usdtBalance = (await usdtContract.balanceOf(store.account)).toString()
   } else {
     console.log('Please connect MetaMask!');
-    ElMessage({ message: 'Please connect MetaMask!' })
   }
 }
 

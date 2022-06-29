@@ -1,10 +1,11 @@
 <template>
     <el-container class="container">
         <el-header class="header">
-            <Header />
+            <Header></Header>
         </el-header>
         <el-main class="main">
-            <Main />
+            <Main></Main>
+            <!-- <router-view></router-view> -->
         </el-main>
     </el-container>
 </template>
@@ -28,7 +29,6 @@ import Main from './main/Main.vue';
     }
 
     .main {
-        padding-top: 100%;
         background-color: darkgray;
     }
 }
