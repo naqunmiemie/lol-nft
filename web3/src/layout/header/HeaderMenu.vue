@@ -1,29 +1,24 @@
+import router from '../../route/index';
 <template>
-    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-        <el-menu-item index="1">Processing Center</el-menu-item>
-        <el-menu-item index="3">Info</el-menu-item>
-        <el-menu-item index="owner">Orders</el-menu-item>
-        <el-sub-menu index="2">
-            <template #title>Workspace</template>
-            <el-menu-item index="2-1">item one</el-menu-item>
-            <el-menu-item index="2-2">item two</el-menu-item>
-            <el-menu-item index="2-3">item three</el-menu-item>
-            <el-sub-menu index="2-4">
-                <template #title>item four</template>
-                <el-menu-item index="2-4-1">item one</el-menu-item>
-                <el-menu-item index="2-4-2">item two</el-menu-item>
-                <el-menu-item index="2-4-3">item three</el-menu-item>
-            </el-sub-menu>
-        </el-sub-menu>
-    </el-menu>
+    <span class="headerMenu">
+        <el-menu default-active="lucky-draw" mode="horizontal" router>
+            <el-menu-item index="lucky-draw">Lucky Draw</el-menu-item>
+            <el-menu-item index="transaction-center">Transaction Center</el-menu-item>
+            <el-menu-item index="your-champions">Your Champions</el-menu-item>
+            <el-menu-item index="admin">admin</el-menu-item>
+        </el-menu>
+    </span>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
 
-const activeIndex = ref('1')
-const activeIndex2 = ref('1')
-const handleSelect = (key: string, keyPath: string[]) => {
-    console.log(key, keyPath)
-}
 </script>
+
+<style lang='scss' scoped>
+.headerMenu {
+    margin-left: 15px;
+    height: 100%;
+    background-color: yellow;
+    width: 500px;
+}
+</style>

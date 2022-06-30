@@ -20,9 +20,9 @@ function clickWallet() {
 
 <style lang='scss' scoped>
 .button {
+
+    flex-direction: row-reverse;
     margin-left: auto;
-    display: flex;
-    justify-content: flex-end;
 
     .icon {
         margin: 6px;

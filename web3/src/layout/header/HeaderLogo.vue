@@ -8,7 +8,7 @@
 .logo{
   display: flex;
   align-items: center;
-  padding-left: 15px;
+  margin-left: 15px;
   color: #fff;
   height:100%;
   img{
