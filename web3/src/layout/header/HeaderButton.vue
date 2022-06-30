@@ -1,9 +1,9 @@
 <template>
-    <div class="button">
+    <span class="button">
         <el-icon class="icon" :size="30" @click="clickWallet()">
             <Wallet />
         </el-icon>
-    </div>
+    </span>
 </template>
 
 <script setup lang='ts'>
@@ -15,8 +15,6 @@ const store = useStore()
 function clickWallet() {
     store.drawer = true
 }
-
-
 </script>
 
 

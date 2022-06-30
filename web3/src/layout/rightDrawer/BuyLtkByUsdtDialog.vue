@@ -16,7 +16,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ElMessage } from 'element-plus';
 import { ethers } from 'ethers';
 import { ref } from 'vue';
 import { ERC20 } from '../../../../contract/src/types/@openzeppelin/contracts/token/ERC20/ERC20';
@@ -32,21 +31,17 @@ const num = ref(0.0001)
 async function buyLtkByUsdt() {
   if (store.provider && store.signer && store.account !== "") {
     const usdtContract = new ethers.Contract(UsdtAddress, UsdtAbi, store.signer) as ERC20;
-    
-    // usdtContract.once("Approval", async (owner, spender, value) => {
-    //   if (spender === LuuTokenAddress) {
-    //     const luuTokenContract = new ethers.Contract(LuuTokenAddress, LuuToken__factory.abi, store.signer) as LuuToken;
-    //     await luuTokenContract.buyLuuTokenByUsdt(value)
-    //   }
 
-    // });
-
+    usdtContract.once("Approval", async (owner, spender, value) => {
+      console.log(`Approval success`);
+      if (spender === LuuTokenAddress && store.provider && store.signer && store.account !== "") {
+        const luuTokenContract = new ethers.Contract(LuuTokenAddress, LuuToken__factory.abi, store.signer) as LuuToken;
+        await luuTokenContract.buyLuuTokenByUsdt(value)
+      }
+    });
     await usdtContract.approve(LuuTokenAddress, num.value * (10 ** 18))
-
-
   } else {
     console.log('Please connect MetaMask!');
-    ElMessage({ message: 'Please connect MetaMask!' })
   }
   store.buyLtkByUsdtDialog = false
 }

@@ -62,7 +62,7 @@ async function connectMetamask(): Promise<boolean> {
   const accounts = <string[]>await store.provider.send("eth_requestAccounts", []);
   if (store.provider && accounts.length !== 0) {
     store.account = accounts[0];
-    store.signer = markRaw(store.provider.getSigner())
+    store.signer = store.provider.getSigner()
     console.log(`account:${accounts[0]}`);
     getBalance();
     return true;
