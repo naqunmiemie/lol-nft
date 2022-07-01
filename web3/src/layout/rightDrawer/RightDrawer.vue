@@ -77,35 +77,17 @@ async function copyAccount() {
   await navigator.clipboard.writeText(store.account)
 }
 
-function getBalance() {
-  getBalanceOfEth()
-  getBalanceOfLtk()
-  getBalanceOfUsdt()
-}
-
-async function getBalanceOfLtk() {
+async function getBalance() {
   if (store.provider && store.signer && store.account !== "") {
+    //getBalanceOfLtk
     const luuTokenContract = new ethers.Contract(LuuTokenAddress, LuuToken__factory.abi, store.signer) as LuuToken;
-    await luuTokenContract.balanceOf(store.account)
     store.luuTokenBalance = (await luuTokenContract.balanceOf(store.account)).toString()
-  } else {
-    console.log('Please connect MetaMask!');
-  }
-}
-
-async function getBalanceOfEth() {
-  if (store.provider && store.signer && store.account !== "") {
+    //getBalanceOfEth
     store.ethBalance = (await store.provider.getBalance(store.account)).toString();
-  } else {
-    console.log('Please connect MetaMask!');
-  }
-}
-
-async function getBalanceOfUsdt() {
-  if (store.provider && store.signer && store.account !== "") {
+    //getBalanceOfUsdt
     const usdtContract = new ethers.Contract(UsdtAddress, UsdtAbi, store.signer) as ERC20;
-    await usdtContract.balanceOf(store.account)
     store.usdtBalance = (await usdtContract.balanceOf(store.account)).toString()
+
   } else {
     console.log('Please connect MetaMask!');
   }

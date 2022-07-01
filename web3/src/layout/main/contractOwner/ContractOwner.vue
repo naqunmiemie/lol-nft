@@ -1,8 +1,8 @@
 <template>
-<h1>Owner</h1>
+<LuuTokenOwner></LuuTokenOwner>
 </template>
 <script setup lang='ts'>
+import LuuTokenOwner from './LuuTokenOwner.vue';    
 </script>
 <style lang='scss' scoped>
-
 </style>

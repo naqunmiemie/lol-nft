@@ -1,26 +1,28 @@
 <template>
   <div class="logo">
-    <img src="../../assets/logo.png" alt="logo"/>
+    <img src="../../assets/logo.png" alt="logo" />
     <span class="title">LuuToken</span>
   </div>
 </template>
 <style lang="scss" scoped>
-.logo{
+.logo {
   display: flex;
   align-items: center;
   margin-left: 15px;
   color: #fff;
-  height:100%;
-  img{
+  height: 100%;
+
+  img {
     height: 90%;
     margin-right: 12px;
   }
-  span{
+
+  span {
     font-weight: 600;
     line-height: 50px;
     font-size: 18px;
     color: #000;
-    font-family: Avenir,Helvetica Neue,Arial,Helvetica, sans-serif;
+    font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
     vertical-align: middle;
   }
 }

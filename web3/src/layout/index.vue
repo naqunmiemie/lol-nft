@@ -5,7 +5,6 @@
         </el-header>
         <el-main class="main">
             <Main></Main>
-            <!-- <router-view></router-view> -->
         </el-main>
     </el-container>
 </template>
@@ -29,7 +28,7 @@ import Main from './main/Main.vue';
     }
 
     .main {
-        background-color: darkgray;
+        background-color: lightgray;
     }
 }
 </style>

@@ -14,10 +14,15 @@ export const useStore = defineStore(APP_STORE, {
     signer: null as JsonRpcSigner | null,
     buyLtkByEthDialog: false,
     buyLtkByUsdtDialog: false,
+    //owner
+    ownerEthBalance: "",
+    ownerUsdtBalance: "",
   }),
   getters: {
     luuTokenBalanceStr: (state) => decimals18todecimals4(state.luuTokenBalance),
     ethBalanceStr: (state) => decimals18todecimals4(state.ethBalance),
     usdtBalanceStr: (state) => decimals18todecimals4(state.usdtBalance),
+    ownerEthBalanceStr: (state) => decimals18todecimals4(state.ownerEthBalance),
+    ownerUsdtBalanceStr: (state) => decimals18todecimals4(state.ownerUsdtBalance),
   },
 });

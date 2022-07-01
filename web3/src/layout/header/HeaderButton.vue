@@ -1,9 +1,9 @@
 <template>
-    <span class="button">
+    <div class="button">
         <el-icon class="icon" :size="30" @click="clickWallet()">
             <Wallet />
         </el-icon>
-    </span>
+    </div>
 </template>
 
 <script setup lang='ts'>
@@ -22,6 +22,7 @@ function clickWallet() {
 .button {
 
     flex-direction: row-reverse;
+    margin-right: 6px;
     margin-left: auto;
 
     .icon {
