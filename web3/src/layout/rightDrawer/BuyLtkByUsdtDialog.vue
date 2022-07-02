@@ -18,11 +18,11 @@
 <script lang="ts" setup>
 import { ethers } from 'ethers';
 import { ref } from 'vue';
-import { ERC20 } from '../../../../contract/src/types/@openzeppelin/contracts/token/ERC20/ERC20';
+import { IERC20 } from '../../../../contract/src/types/@openzeppelin/contracts/token/ERC20/IERC20';
 import { LuuToken } from '../../../../contract/src/types/contracts/LuuToken';
 import { LuuToken__factory } from '../../../../contract/src/types/factories/contracts/LuuToken__factory';
 import { useStore } from '../../store';
-import { LuuTokenAddress } from '../../utils/conctract/luuTokenAddr';
+import { LuuTokenAddress } from '../../utils/conctract/SomeAddress';
 import { UsdtAbi, UsdtAddress } from '../../utils/conctract/usdtAddrAbi';
 
 const store = useStore()
@@ -30,7 +30,7 @@ const num = ref(0.0001)
 
 async function buyLtkByUsdt() {
   if (store.provider && store.signer && store.account !== "") {
-    const usdtContract = new ethers.Contract(UsdtAddress, UsdtAbi, store.signer) as ERC20;
+    const usdtContract = new ethers.Contract(UsdtAddress, UsdtAbi, store.signer) as IERC20;
 
     usdtContract.once("Approval", async (owner, spender, value) => {
       console.log(`Approval success`);

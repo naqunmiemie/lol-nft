@@ -41,9 +41,9 @@ import { markRaw } from 'vue';
 import { LuuToken } from '../../../../contract/src/types/contracts/LuuToken';
 import { LuuToken__factory } from '../../../../contract/src/types/factories/contracts/LuuToken__factory';
 import { useStore } from '../../store/index';
-import { LuuTokenAddress } from '../../utils/conctract/luuTokenAddr';
+import { LuuTokenAddress } from '../../utils/conctract/SomeAddress';
 import { UsdtAddress, UsdtAbi } from '../../utils/conctract/usdtAddrAbi';
-import { ERC20 } from '../../../../contract/src/types/@openzeppelin/contracts/token/ERC20/ERC20';
+import { IERC20 } from '../../../../contract/src/types/@openzeppelin/contracts/token/ERC20/IERC20';
 import BuyLtkByEthDialog from './BuyLtkByEthDialog.vue';
 import BuyLtkByUsdtDialog from './BuyLtkByUsdtDialog.vue';
 
@@ -85,7 +85,7 @@ async function getBalance() {
     //getBalanceOfEth
     store.ethBalance = (await store.provider.getBalance(store.account)).toString();
     //getBalanceOfUsdt
-    const usdtContract = new ethers.Contract(UsdtAddress, UsdtAbi, store.signer) as ERC20;
+    const usdtContract = new ethers.Contract(UsdtAddress, UsdtAbi, store.signer) as IERC20;
     store.usdtBalance = (await usdtContract.balanceOf(store.account)).toString()
 
   } else {

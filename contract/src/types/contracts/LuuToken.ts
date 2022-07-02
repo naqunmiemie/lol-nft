@@ -36,6 +36,7 @@ export interface LuuTokenInterface extends utils.Interface {
     "buyLuuTokenByUsdt(uint256)": FunctionFragment;
     "decimals()": FunctionFragment;
     "decreaseAllowance(address,uint256)": FunctionFragment;
+    "getLatestPrice()": FunctionFragment;
     "increaseAllowance(address,uint256)": FunctionFragment;
     "initialize()": FunctionFragment;
     "mint(address,uint256)": FunctionFragment;
@@ -54,7 +55,7 @@ export interface LuuTokenInterface extends utils.Interface {
     "upgradeTo(address)": FunctionFragment;
     "upgradeToAndCall(address,bytes)": FunctionFragment;
     "withdrawEth()": FunctionFragment;
-    "withdrawUsdt(uint256)": FunctionFragment;
+    "withdrawUsdt()": FunctionFragment;
   };
 
   getFunction(
@@ -66,6 +67,7 @@ export interface LuuTokenInterface extends utils.Interface {
       | "buyLuuTokenByUsdt"
       | "decimals"
       | "decreaseAllowance"
+      | "getLatestPrice"
       | "increaseAllowance"
       | "initialize"
       | "mint"
@@ -108,6 +110,10 @@ export interface LuuTokenInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "decreaseAllowance",
     values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getLatestPrice",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "increaseAllowance",
@@ -162,7 +168,7 @@ export interface LuuTokenInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "withdrawUsdt",
-    values: [BigNumberish]
+    values?: undefined
   ): string;
 
   decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
@@ -179,6 +185,10 @@ export interface LuuTokenInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "decreaseAllowance",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getLatestPrice",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -394,6 +404,8 @@ export interface LuuToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    getLatestPrice(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     increaseAllowance(
       spender: string,
       addedValue: BigNumberish,
@@ -468,7 +480,6 @@ export interface LuuToken extends BaseContract {
     ): Promise<ContractTransaction>;
 
     withdrawUsdt(
-      amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
   };
@@ -503,6 +514,8 @@ export interface LuuToken extends BaseContract {
     subtractedValue: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  getLatestPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
   increaseAllowance(
     spender: string,
@@ -578,7 +591,6 @@ export interface LuuToken extends BaseContract {
   ): Promise<ContractTransaction>;
 
   withdrawUsdt(
-    amount: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -611,6 +623,8 @@ export interface LuuToken extends BaseContract {
       subtractedValue: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
+
+    getLatestPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseAllowance(
       spender: string,
@@ -675,10 +689,7 @@ export interface LuuToken extends BaseContract {
 
     withdrawEth(overrides?: CallOverrides): Promise<void>;
 
-    withdrawUsdt(
-      amount: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    withdrawUsdt(overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
@@ -772,6 +783,8 @@ export interface LuuToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    getLatestPrice(overrides?: CallOverrides): Promise<BigNumber>;
+
     increaseAllowance(
       spender: string,
       addedValue: BigNumberish,
@@ -846,7 +859,6 @@ export interface LuuToken extends BaseContract {
     ): Promise<BigNumber>;
 
     withdrawUsdt(
-      amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
   };
@@ -885,6 +897,8 @@ export interface LuuToken extends BaseContract {
       subtractedValue: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
+
+    getLatestPrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     increaseAllowance(
       spender: string,
@@ -960,7 +974,6 @@ export interface LuuToken extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     withdrawUsdt(
-      amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
   };

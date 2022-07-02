@@ -1,6 +1,7 @@
 import { JsonRpcSigner, Web3Provider } from "@ethersproject/providers";
 import { defineStore } from "pinia";
 import { decimals18todecimals4 } from "../utils/math";
+import { getContractStateStr } from "../utils/util";
 export const APP_STORE = "app";
 
 export const useStore = defineStore(APP_STORE, {
@@ -17,12 +18,16 @@ export const useStore = defineStore(APP_STORE, {
     //owner
     ownerEthBalance: "",
     ownerUsdtBalance: "",
+    luuTokenContractState: false,
   }),
   getters: {
     luuTokenBalanceStr: (state) => decimals18todecimals4(state.luuTokenBalance),
     ethBalanceStr: (state) => decimals18todecimals4(state.ethBalance),
     usdtBalanceStr: (state) => decimals18todecimals4(state.usdtBalance),
     ownerEthBalanceStr: (state) => decimals18todecimals4(state.ownerEthBalance),
-    ownerUsdtBalanceStr: (state) => decimals18todecimals4(state.ownerUsdtBalance),
+    ownerUsdtBalanceStr: (state) =>
+      decimals18todecimals4(state.ownerUsdtBalance),
+    luuTokenContractStateStr: (state) =>
+      getContractStateStr(state.luuTokenContractState),
   },
 });

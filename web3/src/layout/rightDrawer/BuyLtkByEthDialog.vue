@@ -22,7 +22,7 @@ import { ref } from 'vue';
 import { LuuToken } from '../../../../contract/src/types/contracts/LuuToken';
 import { LuuToken__factory } from '../../../../contract/src/types/factories/contracts/LuuToken__factory';
 import { useStore } from '../../store';
-import { LuuTokenAddress } from '../../utils/conctract/luuTokenAddr';
+import { LuuTokenAddress } from '../../utils/conctract/SomeAddress';
 
 const store = useStore()
 const num = ref(0.0001)

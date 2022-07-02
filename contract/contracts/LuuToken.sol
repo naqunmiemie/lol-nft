@@ -7,13 +7,22 @@ import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
 contract LuuToken is Initializable, ERC20Upgradeable, PausableUpgradeable, OwnableUpgradeable, UUPSUpgradeable {
+    AggregatorV3Interface internal priceEthFeed;
+
     function initialize() public initializer {
         __ERC20_init("LuuToken", "LTK");
         __Pausable_init();
         __Ownable_init();
         __UUPSUpgradeable_init();
+        /**
+         * Network: Rinkeby
+         * Aggregator: ETH/USD
+         * Address: 0x8A753747A1Fa494EC906cE90E9f37563A8AF630e
+         */
+        priceEthFeed = AggregatorV3Interface(0x8A753747A1Fa494EC906cE90E9f37563A8AF630e);
     }
 
     //onlyOwner
@@ -35,9 +44,9 @@ contract LuuToken is Initializable, ERC20Upgradeable, PausableUpgradeable, Ownab
         payable(msg.sender).transfer(address(this).balance);
     }
 
-    function withdrawUsdt(uint256 amount) public onlyOwner {
-        IERC20 usdcContract = IERC20(0xD9BA894E0097f8cC2BBc9D24D308b98e36dc6D02);
-        usdcContract.transfer(msg.sender, amount);
+    function withdrawUsdt() public onlyOwner {
+        IERC20 usdtContract = IERC20(0xD9BA894E0097f8cC2BBc9D24D308b98e36dc6D02);
+        usdtContract.transfer(msg.sender, usdtContract.balanceOf(address(this)));
     }
 
     //internal
@@ -48,12 +57,24 @@ contract LuuToken is Initializable, ERC20Upgradeable, PausableUpgradeable, Ownab
     //public
     //public
     //public
-    function buyLuuTokenByEth() public payable {
-        require(msg.value >= 0.0001 ether, "You must pay at least 0.0001 eth");
-        _mint(msg.sender, msg.value);
+
+    /**
+     * Returns the latest price
+     */
+    function getLatestPrice() public view returns (int256) {
+        (, int256 price, , , ) = priceEthFeed.latestRoundData();
+        return price;
     }
 
-    function buyLuuTokenByUsdt(uint256 amount) public {
+    function buyLuuTokenByEth() public payable whenNotPaused {
+        require(msg.value >= 0.0001 ether, "You must pay at least 0.0001 eth");
+        int256 price = getLatestPrice();
+        require(price > 0, "Eth price error");
+        uint256 amount = (msg.value * uint256(price)) / (10**8);
+        _mint(msg.sender, amount);
+    }
+
+    function buyLuuTokenByUsdt(uint256 amount) public whenNotPaused {
         require(amount > 1, "You must pay at least 1 Usdt");
         IERC20 usdcContract = IERC20(0xD9BA894E0097f8cC2BBc9D24D308b98e36dc6D02);
         usdcContract.transferFrom(msg.sender, address(this), amount);
