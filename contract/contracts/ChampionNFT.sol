@@ -18,6 +18,7 @@ contract ChampionNFT is
     UUPSUpgradeable
 {
     using CountersUpgradeable for CountersUpgradeable.Counter;
+    mapping(address => uint256[]) private _ownerTokenIds;
 
     CountersUpgradeable.Counter private _tokenIdCounter;
 
@@ -45,6 +46,8 @@ contract ChampionNFT is
         _tokenIdCounter.increment();
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
+        //维护_ownerTokenIds
+        _ownerTokenIds[to].push(tokenId);
     }
 
     //internal
@@ -56,6 +59,23 @@ contract ChampionNFT is
         uint256 tokenId
     ) internal override whenNotPaused {
         super._beforeTokenTransfer(from, to, tokenId);
+
+        //维护_ownerTokenIds
+        if (from != address(0) && from != to) {
+            uint256 balance = balanceOf(from);
+            uint256[] tokenIds = _ownerTokenIds[from];
+            for (uint256 i = 0; i < balance; ++i) {
+                if (tokenIds[i] == tokenId) {
+                    if (i != balance - 1) {
+                        tokenIds[i] = tokenIds[balance - 1];
+                    }
+                    tokenIds.pop();
+                }
+            }
+        }
+        if (to != address(0) && to != from) {
+            _ownerTokenIds[to].push(tokenId);
+        }
     }
 
     function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
@@ -76,17 +96,5 @@ contract ChampionNFT is
         returns (string memory)
     {
         return super.tokenURI(tokenId);
-    }
-
-    function ownedTokensId(address addr) public view returns (uint256[] memory) {
-        uint256 maxTokenId = _tokenIdCounter.current();
-        require(maxTokenId > 0, "NFT has not been minted yet");
-        uint256[] memory tokenIds;
-        for (uint256 tokenId = 1; tokenId < maxTokenId; ++tokenId) {
-            if (ownerOf(tokenId) == addr) {
-                tokenIds.push(tokenId);
-            }
-        }
-        return tokenIds;
     }
 }
