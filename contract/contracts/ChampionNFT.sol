@@ -46,8 +46,6 @@ contract ChampionNFT is
         _tokenIdCounter.increment();
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
-        //维护_ownerTokenIds
-        _ownerTokenIds[to].push(tokenId);
     }
 
     //internal
@@ -63,13 +61,14 @@ contract ChampionNFT is
         //维护_ownerTokenIds
         if (from != address(0) && from != to) {
             uint256 balance = balanceOf(from);
-            uint256[] tokenIds = _ownerTokenIds[from];
+            uint256[] storage tokenIds = _ownerTokenIds[from];
             for (uint256 i = 0; i < balance; ++i) {
                 if (tokenIds[i] == tokenId) {
                     if (i != balance - 1) {
                         tokenIds[i] = tokenIds[balance - 1];
                     }
                     tokenIds.pop();
+                    break;
                 }
             }
         }
@@ -79,8 +78,6 @@ contract ChampionNFT is
     }
 
     function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
-
-    // The following functions are overrides required by Solidity.
 
     function _burn(uint256 tokenId) internal override(ERC721Upgradeable, ERC721URIStorageUpgradeable) {
         super._burn(tokenId);
@@ -96,5 +93,9 @@ contract ChampionNFT is
         returns (string memory)
     {
         return super.tokenURI(tokenId);
+    }
+
+    function getOwnerTokenIds(address addr) public view returns (uint256[] memory) {
+        return _ownerTokenIds[addr];
     }
 }

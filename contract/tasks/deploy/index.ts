@@ -1,2 +1,2 @@
-import "./Greeter"
 import "./LuuToken"
+import "./ChampionNFT"

@@ -1,29 +1,31 @@
 <template>
-    <el-card class="box-card">
-        <template #header>
-            <div class="card-header">
-                <span>LuuToken</span>
-                <span class="contractState">{{ store.luuTokenContractStateStr }}</span>
+    <span>
+        <el-card class="box-card">
+            <template #header>
+                <div class="card-header">
+                    <span>LuuToken</span>
+                    <span class="contractState">{{ store.luuTokenContractStateStr }}</span>
 
-                <div class="stateButton">
-                    <el-button class="button" type="primary" text @click="UnpauseLuuToken()">Unpause</el-button>
-                    <el-button class="button" type="danger" text @click="PauseLuuToken()">Pause</el-button>
+                    <div class="stateButton">
+                        <el-button class="button" type="primary" text @click="UnpauseLuuToken()">Unpause</el-button>
+                        <el-button class="button" type="danger" text @click="PauseLuuToken()">Pause</el-button>
+                    </div>
+
                 </div>
-
+            </template>
+            <div class="item">
+                <span>Eth:</span>
+                <span class="ethBalance">{{ store.ownerEthBalanceStr }}</span>
+                <el-button type="primary" text @click="withDrawEth()">withDraw</el-button>
             </div>
-        </template>
-        <div class="item">
-            <span>Eth:</span>
-            <span class="ethBalance">{{ store.ownerEthBalanceStr }}</span>
-            <el-button type="primary" text @click="withDrawEth()">withDraw</el-button>
-        </div>
-        <el-divider />
-        <div class="item">
-            <span>Usdt:</span>
-            <span class="usdtBalance">{{ store.ownerUsdtBalanceStr }}</span>
-            <el-button type="primary" text @click="withDrawUsdt()">withDraw</el-button>
-        </div>
-    </el-card>
+            <el-divider />
+            <div class="item">
+                <span>Usdt:</span>
+                <span class="usdtBalance">{{ store.ownerUsdtBalanceStr }}</span>
+                <el-button type="primary" text @click="withDrawUsdt()">withDraw</el-button>
+            </div>
+        </el-card>
+    </span>
 </template>
 
 <script setup lang='ts'>
@@ -66,6 +68,16 @@ async function PauseLuuToken() {
     }
 }
 
+async function getLuuTokenContractState() {
+    if (store.provider && store.signer) {
+        const luuTokenContract = new ethers.Contract(LuuTokenAddress, LuuToken__factory.abi, store.signer) as LuuToken;
+        store.luuTokenContractState = await luuTokenContract.paused()
+        console.log('getLuuTokenContractState');
+    } else {
+        console.log('Please connect MetaMask!');
+    }
+}
+
 async function getOwnerBalance() {
     if (store.provider && store.signer) {
         //getBalanceOfEth
@@ -73,16 +85,6 @@ async function getOwnerBalance() {
         //getBalanceOfUsdt
         const usdtContract = new ethers.Contract(UsdtAddress, UsdtAbi, store.signer) as IERC20;
         store.ownerUsdtBalance = (await usdtContract.balanceOf(LuuTokenAddress)).toString()
-    } else {
-        console.log('Please connect MetaMask!');
-    }
-}
-
-async function getLuuTokenContractState() {
-    if (store.provider && store.signer) {
-        const luuTokenContract = new ethers.Contract(LuuTokenAddress, LuuToken__factory.abi, store.signer) as LuuToken;
-        store.luuTokenContractState = await luuTokenContract.paused()
-        console.log('getLuuTokenContractState');
     } else {
         console.log('Please connect MetaMask!');
     }

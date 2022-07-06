@@ -19,6 +19,7 @@ export const useStore = defineStore(APP_STORE, {
     ownerEthBalance: "",
     ownerUsdtBalance: "",
     luuTokenContractState: false,
+    championNFTContractState: false,
   }),
   getters: {
     luuTokenBalanceStr: (state) => decimals18todecimals4(state.luuTokenBalance),
@@ -29,5 +30,7 @@ export const useStore = defineStore(APP_STORE, {
       decimals18todecimals4(state.ownerUsdtBalance),
     luuTokenContractStateStr: (state) =>
       getContractStateStr(state.luuTokenContractState),
+    championNFTContractStateStr: (state) =>
+      getContractStateStr(state.championNFTContractState),
   },
 });
