@@ -35,6 +35,7 @@ export interface ChampionNFTInterface extends utils.Interface {
     "getOwnerTokenIds(address)": FunctionFragment;
     "initialize()": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
+    "mintToContract(string)": FunctionFragment;
     "name()": FunctionFragment;
     "owner()": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
@@ -64,6 +65,7 @@ export interface ChampionNFTInterface extends utils.Interface {
       | "getOwnerTokenIds"
       | "initialize"
       | "isApprovedForAll"
+      | "mintToContract"
       | "name"
       | "owner"
       | "ownerOf"
@@ -105,6 +107,10 @@ export interface ChampionNFTInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "isApprovedForAll",
     values: [string, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "mintToContract",
+    values: [string]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
@@ -175,6 +181,10 @@ export interface ChampionNFTInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "isApprovedForAll",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "mintToContract",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
@@ -401,6 +411,11 @@ export interface ChampionNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
+    mintToContract(
+      uri: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     name(overrides?: CallOverrides): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
@@ -517,6 +532,11 @@ export interface ChampionNFT extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
+  mintToContract(
+    uri: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   name(overrides?: CallOverrides): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
@@ -624,6 +644,8 @@ export interface ChampionNFT extends BaseContract {
       operator: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
+
+    mintToContract(uri: string, overrides?: CallOverrides): Promise<void>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
@@ -796,6 +818,11 @@ export interface ChampionNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    mintToContract(
+      uri: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
@@ -914,6 +941,11 @@ export interface ChampionNFT extends BaseContract {
       owner: string,
       operator: string,
       overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    mintToContract(
+      uri: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;

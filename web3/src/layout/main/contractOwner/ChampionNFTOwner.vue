@@ -91,7 +91,7 @@ function mintNFT() {
 async function mintChampionNFT() {
     if (store.provider && store.signer) {
         const championNFTContract = new ethers.Contract(ChampionNFTAddress, ChampionNFT__factory.abi, store.signer) as ChampionNFT;
-        await championNFTContract.safeMint(ChampionNFTAddress,uri.value)
+        await championNFTContract.mintToContract(uri.value)
         console.log('mintChampionNFT');
     } else {
         console.log('Please connect MetaMask!');

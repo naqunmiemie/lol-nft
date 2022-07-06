@@ -48,6 +48,13 @@ contract ChampionNFT is
         _setTokenURI(tokenId, uri);
     }
 
+    function mintToContract(string memory uri) external onlyOwner {
+        uint256 tokenId = _tokenIdCounter.current();
+        _tokenIdCounter.increment();
+        _mint(address(this), tokenId);
+        _setTokenURI(tokenId, uri);
+    }
+
     //internal
     //internal
     //internal
