@@ -9,7 +9,7 @@ const store = useStore();
 export interface ChampionInformation {
   tokenId: BigNumber;
   num: string;
-  namne: string;
+  name: string;
   title: string;
   img: string;
   uri: string;
