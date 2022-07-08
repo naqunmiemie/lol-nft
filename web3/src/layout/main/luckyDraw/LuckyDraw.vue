@@ -1,18 +1,21 @@
 <template>
-  <el-row>
-    <el-col v-for="(info) in championInformations" :key="info.num" :span="3">
-      <el-card :body-style="{ padding: '4px' }" class="card" shadow="always">
-        <img :src=info.img class="image" />
-        <div style="padding: 10px">
-          <span>Yummy hamburger</span>
-          <div class="bottom">
-            <time class="time">{{ currentDate }}</time>
-            <el-button text class="button">Operating</el-button>
+  <div class="main">
+    <el-row>
+      <el-col v-for="(info) in championInformations" :key="info.num" :span="3">
+        <el-card :body-style="{ padding: '4px' }" class="card" shadow="always">
+          <img :src=info.img class="image" />
+          <div style="padding: 10px">
+            <div class="mod-name">{{ info.name }}</div>
+            <div class="mod-title">{{ info.title }}</div>
           </div>
-        </div>
-      </el-card>
-    </el-col>
-  </el-row>
+        </el-card>
+      </el-col>
+    </el-row>
+
+    <el-affix target=".main" position="bottom" :offset="80">
+      <el-button type="primary">Offset bottom 20px</el-button>
+    </el-affix>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -25,7 +28,6 @@ import { ChampionNFTAddress } from '../../../utils/conctract/SomeAddress';
 import { getChampionInformation, ChampionInformation } from '../championInformation';
 
 const store = useStore()
-const currentDate = ref(new Date())
 const championInformations = ref(new Array<ChampionInformation>())
 prizePool()
 async function prizePool() {
@@ -52,30 +54,24 @@ async function prizePool() {
 </script>
 
 <style scoped>
-.time {
-  font-size: 12px;
-  color: #999;
+.main {
+  text-align: center;
 }
 
 .card {
   margin: 3px;
 }
 
-.bottom {
-  margin-top: 10px;
-  line-height: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.button {
-  padding: 0;
-  min-height: auto;
-}
-
 .image {
   width: 100%;
   display: block;
+}
+
+.mod-name {
+  font-size: medium;
+}
+
+.mod-title {
+  font-size: x-small;
 }
 </style>

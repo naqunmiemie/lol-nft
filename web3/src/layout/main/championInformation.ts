@@ -36,7 +36,6 @@ export async function getChampionInformation(
       title: "",
       img: "",
     };
-    console.log("prizePool");
     return reptile(championInformation);
   } else {
     console.log("Please connect MetaMask!");
