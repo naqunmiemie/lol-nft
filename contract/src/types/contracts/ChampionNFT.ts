@@ -35,6 +35,7 @@ export interface ChampionNFTInterface extends utils.Interface {
     "getOwnerTokenIds(address)": FunctionFragment;
     "initialize()": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
+    "luckyDraw(uint256,uint8,bytes32,bytes32)": FunctionFragment;
     "mintToContract(string)": FunctionFragment;
     "name()": FunctionFragment;
     "owner()": FunctionFragment;
@@ -65,6 +66,7 @@ export interface ChampionNFTInterface extends utils.Interface {
       | "getOwnerTokenIds"
       | "initialize"
       | "isApprovedForAll"
+      | "luckyDraw"
       | "mintToContract"
       | "name"
       | "owner"
@@ -107,6 +109,10 @@ export interface ChampionNFTInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "isApprovedForAll",
     values: [string, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "luckyDraw",
+    values: [BigNumberish, BigNumberish, BytesLike, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "mintToContract",
@@ -183,6 +189,7 @@ export interface ChampionNFTInterface extends utils.Interface {
     functionFragment: "isApprovedForAll",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "luckyDraw", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "mintToContract",
     data: BytesLike
@@ -411,6 +418,14 @@ export interface ChampionNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
+    luckyDraw(
+      deadline: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     mintToContract(
       uri: string,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -532,6 +547,14 @@ export interface ChampionNFT extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
+  luckyDraw(
+    deadline: BigNumberish,
+    v: BigNumberish,
+    r: BytesLike,
+    s: BytesLike,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   mintToContract(
     uri: string,
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -644,6 +667,14 @@ export interface ChampionNFT extends BaseContract {
       operator: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
+
+    luckyDraw(
+      deadline: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     mintToContract(uri: string, overrides?: CallOverrides): Promise<void>;
 
@@ -818,6 +849,14 @@ export interface ChampionNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    luckyDraw(
+      deadline: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     mintToContract(
       uri: string,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -941,6 +980,14 @@ export interface ChampionNFT extends BaseContract {
       owner: string,
       operator: string,
       overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    luckyDraw(
+      deadline: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     mintToContract(

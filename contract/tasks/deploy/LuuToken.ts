@@ -1,7 +1,7 @@
 import { task } from "hardhat/config";
 import type { HardhatRuntimeEnvironment, RunSuperFunction, TaskArguments } from "hardhat/types";
 
-export const LuuTokenAddress = "0x8C284C2d6C01c68d5efc200eF2c319338B2444e1";
+export const LuuTokenAddress = "0x709fE432BA5f1c848639A18bD6a4a83CaF6CEbBd";
 
 task("deploy:LuuToken").setAction(
   async (taskArgs: TaskArguments, hre: HardhatRuntimeEnvironment, runSuper: RunSuperFunction<any>) => {

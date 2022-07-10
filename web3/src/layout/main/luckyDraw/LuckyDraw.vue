@@ -13,7 +13,7 @@
     </el-row>
 
     <el-affix target=".main" position="bottom" :offset="80">
-      <el-button type="primary">Offset bottom 20px</el-button>
+      <el-button type="primary" @click="luckyDraw()">Lucky Draw</el-button>
     </el-affix>
   </div>
 </template>
@@ -45,6 +45,17 @@ async function prizePool() {
       })
 
     }
+    console.log('prizePool');
+  } else {
+    console.log('Please connect MetaMask!');
+  }
+}
+
+async function luckyDraw() {
+  if (store.provider && store.signer) {
+    const championNFTContract = new ethers.Contract(ChampionNFTAddress, ChampionNFT__factory.abi, store.signer) as ChampionNFT;
+    const tokenIds: BigNumber[] = await championNFTContract.getOwnerTokenIds(ChampionNFTAddress);
+
     console.log('prizePool');
   } else {
     console.log('Please connect MetaMask!');

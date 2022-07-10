@@ -8,6 +8,7 @@ import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol";
+import "./LuuToken.sol";
 
 contract ChampionNFT is
     Initializable,
@@ -104,5 +105,34 @@ contract ChampionNFT is
 
     function getOwnerTokenIds(address addr) public view returns (uint256[] memory) {
         return _ownerTokenIds[addr];
+    }
+
+    function luckyDraw(
+        uint256 deadline,
+        uint8 v,
+        bytes32 r,
+        bytes32 s
+    ) public {
+        uint256 amount = 10**18;
+        address luuTokenAddr = 0x709fE432BA5f1c848639A18bD6a4a83CaF6CEbBd;
+        LuuToken luuToken = LuuToken(luuTokenAddr);
+        luuToken.permit(msg.sender, luuTokenAddr, amount, deadline, v, r, s);
+        require(luuToken.transferFrom(msg.sender, luuTokenAddr, amount), "Transfer from error");
+        uint256 seed = uint256(
+            keccak256(
+                abi.encodePacked(
+                    (block.timestamp) +
+                        (block.difficulty) +
+                        ((uint256(keccak256(abi.encodePacked(block.coinbase)))) / (block.timestamp)) +
+                        (block.gaslimit) +
+                        ((uint256(keccak256(abi.encodePacked(msg.sender)))) / (block.timestamp)) +
+                        (block.number)
+                )
+            )
+        );
+
+        uint256[] memory tokenIds = getOwnerTokenIds(address(this));
+        uint256 id = tokenIds[seed % tokenIds.length];
+        transferFrom(address(this), msg.sender, id);
     }
 }
