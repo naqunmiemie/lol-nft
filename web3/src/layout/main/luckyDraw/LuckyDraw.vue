@@ -19,6 +19,7 @@
 </template>
 
 <script lang="ts" setup>
+import { JsonRpcSigner } from '@ethersproject/providers';
 import { BigNumber, ethers } from 'ethers';
 import { ref } from 'vue';
 import { ChampionNFT } from '../../../../../contract/src/types/contracts/ChampionNFT';
@@ -60,19 +61,21 @@ async function luckyDraw() {
   if (store.provider && store.signer && store.account) {
     const championNFTContract = new ethers.Contract(ChampionNFTAddress, ChampionNFT__factory.abi, store.signer) as ChampionNFT;
     const luuTokenContract = new ethers.Contract(LuuTokenAddress, LuuToken__factory.abi, store.signer) as LuuToken;
-    await luuTokenContract.nonces(store.account);
+    const nonce = await (await luuTokenContract.nonces(store.account)).toNumber();
+
+    const deadline = getDeadline();
+    const amount = 10 ** 18;
+    const chainId = (await store.provider.getNetwork()).chainId
     
-    let deadline = getDeadline();
-    let amount = 10 ** 18;
     let msgParams = premitTypedDate("LuuToken",
       LuuTokenAddress,
-      store.account, bankAddr.address, amount, deadline, this.chainId, this.nonce);
+      store.account, LuuTokenAddress, amount, deadline, chainId, nonce);
 
     store.provider.({
       method: 'eth_signTypedData_v4',
-      params: [store.account, permitTypehash],
+      params: [store.account, msgParams],
       from: store.account
-    }, (err, sign) => {
+    }, (err:Error, sign:JsonRpcSigner) => {
       this.sign = sign.result;
       console.log(this.sign)
       //  椭圆曲线签名签名的值:
