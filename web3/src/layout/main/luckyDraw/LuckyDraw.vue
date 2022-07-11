@@ -22,10 +22,15 @@
 import { BigNumber, ethers } from 'ethers';
 import { ref } from 'vue';
 import { ChampionNFT } from '../../../../../contract/src/types/contracts/ChampionNFT';
+import { LuuToken } from '../../../../../contract/src/types/contracts/LuuToken';
 import { ChampionNFT__factory } from '../../../../../contract/src/types/factories/contracts/ChampionNFT__factory';
+import { LuuToken__factory } from '../../../../../contract/src/types/factories/contracts/LuuToken__factory';
 import { useStore } from '../../../store';
-import { ChampionNFTAddress } from '../../../utils/conctract/SomeAddress';
-import { getChampionInformation, ChampionInformation } from '../championInformation';
+import { ChampionInformation, getChampionInformation } from '../../../types/championInformation';
+import { ChampionNFTAddress, LuuTokenAddress } from '../../../utils/conctract/SomeAddress';
+import { getDeadline } from '../../../utils/contractHelper/permitHelper';
+import { premitTypedDate } from '../../../utils/contractHelper/typedData';
+
 
 const store = useStore()
 const championInformations = ref(new Array<ChampionInformation>())
@@ -52,11 +57,39 @@ async function prizePool() {
 }
 
 async function luckyDraw() {
-  if (store.provider && store.signer) {
+  if (store.provider && store.signer && store.account) {
     const championNFTContract = new ethers.Contract(ChampionNFTAddress, ChampionNFT__factory.abi, store.signer) as ChampionNFT;
-    const tokenIds: BigNumber[] = await championNFTContract.getOwnerTokenIds(ChampionNFTAddress);
+    const luuTokenContract = new ethers.Contract(LuuTokenAddress, LuuToken__factory.abi, store.signer) as LuuToken;
+    await luuTokenContract.nonces(store.account);
+    
+    let deadline = getDeadline();
+    let amount = 10 ** 18;
+    let msgParams = premitTypedDate("LuuToken",
+      LuuTokenAddress,
+      store.account, bankAddr.address, amount, deadline, this.chainId, this.nonce);
 
-    console.log('prizePool');
+    store.provider.({
+      method: 'eth_signTypedData_v4',
+      params: [store.account, permitTypehash],
+      from: store.account
+    }, (err, sign) => {
+      this.sign = sign.result;
+      console.log(this.sign)
+      //  椭圆曲线签名签名的值:
+      // r = 签名的前 32 字节
+      // s = 签名的第2个32 字节
+      // v = 签名的最后一个字节
+      let r = '0x' + this.sign.substring(2).substring(0, 64);
+      let s = '0x' + this.sign.substring(2).substring(64, 128);
+      let v = '0x' + this.sign.substring(2).substring(128, 130);
+      this.bank.permitDeposit(this.account, amount, this.deadline, v, r, s, {
+        from: this.account
+      }).then(() => {
+        this.getInfo();
+        this.getNonce();
+      })
+    });
+    console.log('luckyDraw');
   } else {
     console.log('Please connect MetaMask!');
   }

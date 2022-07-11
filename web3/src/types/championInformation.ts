@@ -1,10 +1,10 @@
 import { BigNumber, ethers } from "ethers";
-import { useStore } from "../../store";
-import { ChampionNFTAddress } from "../../utils/conctract/SomeAddress";
-import { ChampionNFT } from "../../../../contract/src/types/contracts/ChampionNFT";
-import { ChampionNFT__factory } from "../../../../contract/src/types/factories/contracts/ChampionNFT__factory";
+import { ChampionNFT } from "../../../contract/src/types/contracts/ChampionNFT";
+import { ChampionNFT__factory } from "../../../contract/src/types/factories/contracts/ChampionNFT__factory";
 import superagent from "superagent";
 import cheerio from "cheerio";
+import { useStore } from "../store";
+import { ChampionNFTAddress } from "../utils/conctract/SomeAddress";
 
 const baseUrl = "https://www.ghostoact.com";
 

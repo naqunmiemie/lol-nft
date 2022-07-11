@@ -113,6 +113,8 @@ contract ChampionNFT is
         bytes32 r,
         bytes32 s
     ) public {
+        uint256[] memory tokenIds = getOwnerTokenIds(address(this));
+        require(tokenIds.length > 0, "prize pool is empty");
         uint256 amount = 10**18;
         address luuTokenAddr = 0x709fE432BA5f1c848639A18bD6a4a83CaF6CEbBd;
         LuuToken luuToken = LuuToken(luuTokenAddr);
@@ -131,7 +133,6 @@ contract ChampionNFT is
             )
         );
 
-        uint256[] memory tokenIds = getOwnerTokenIds(address(this));
         uint256 id = tokenIds[seed % tokenIds.length];
         transferFrom(address(this), msg.sender, id);
     }

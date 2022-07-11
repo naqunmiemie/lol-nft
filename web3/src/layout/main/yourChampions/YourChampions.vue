@@ -20,8 +20,8 @@ import { ref } from 'vue';
 import { ChampionNFT } from '../../../../../contract/src/types/contracts/ChampionNFT';
 import { ChampionNFT__factory } from '../../../../../contract/src/types/factories/contracts/ChampionNFT__factory';
 import { useStore } from '../../../store';
+import { ChampionInformation, getChampionInformation } from '../../../types/championInformation';
 import { ChampionNFTAddress } from '../../../utils/conctract/SomeAddress';
-import { getChampionInformation, ChampionInformation } from '../championInformation';
 
 const store = useStore()
 const championInformations = ref(new Array<ChampionInformation>())
