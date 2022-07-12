@@ -35,7 +35,6 @@ async function buyLtkByEth() {
 
   } else {
     console.log('Please connect MetaMask!');
-    ElMessage({ message: 'Please connect MetaMask!' })
   }
   store.buyLtkByEthDialog = false
 }

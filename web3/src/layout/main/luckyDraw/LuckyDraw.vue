@@ -66,33 +66,33 @@ async function luckyDraw() {
     const deadline = getDeadline();
     const amount = 10 ** 18;
     const chainId = (await store.provider.getNetwork()).chainId
-    
+
     let msgParams = premitTypedDate("LuuToken",
       LuuTokenAddress,
       store.account, LuuTokenAddress, amount, deadline, chainId, nonce);
-
-    store.provider.({
+    window.ethereum.request({
       method: 'eth_signTypedData_v4',
       params: [store.account, msgParams],
-      from: store.account
-    }, (err:Error, sign:JsonRpcSigner) => {
-      this.sign = sign.result;
-      console.log(this.sign)
+    }).then((result) => {
+      const sign = result.result;
+      const err = result.error;
+      console.log(sign);
+      console.log(err);
       //  椭圆曲线签名签名的值:
       // r = 签名的前 32 字节
       // s = 签名的第2个32 字节
       // v = 签名的最后一个字节
-      let r = '0x' + this.sign.substring(2).substring(0, 64);
-      let s = '0x' + this.sign.substring(2).substring(64, 128);
-      let v = '0x' + this.sign.substring(2).substring(128, 130);
-      this.bank.permitDeposit(this.account, amount, this.deadline, v, r, s, {
-        from: this.account
-      }).then(() => {
-        this.getInfo();
-        this.getNonce();
-      })
-    });
-    console.log('luckyDraw');
+      if (typeof sign === 'string') {
+        let r = '0x' + sign.substring(2).substring(0, 64);
+        let s = '0x' + sign.substring(2).substring(64, 128);
+        let v = '0x' + sign.substring(2).substring(128, 130);
+        championNFTContract.luckyDraw(deadline, v, r, s, {
+          from: store.account
+        }).then(() => {
+          console.log('luckyDraw');
+        })
+      }
+    })
   } else {
     console.log('Please connect MetaMask!');
   }
