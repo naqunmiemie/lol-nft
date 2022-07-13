@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts" setup>
-import { BigNumber, ethers } from 'ethers';
+import { BigNumber, ethers, PayableOverrides } from 'ethers';
 import { ref } from 'vue';
 import { ChampionNFT } from '../../../../../contract/src/types/contracts/ChampionNFT';
 import { LuuTokenV2 } from '../../../../../contract/src/types/contracts/LuuTokenV2';
@@ -53,11 +53,11 @@ async function prizePool() {
 }
 
 async function luckyDraw() {
-  console.log("luckyDraw");
   if (store.provider && store.signer && store.account !== "") {
-    console.log("luckyDraw!!!");
+
     const luuTokenContract = new ethers.Contract(LuuTokenAddress, LuuTokenV2__factory.abi, store.signer) as LuuTokenV2;
     await luuTokenContract.luckyDraw();
+    console.log("luckyDraw");
   } else {
     console.log('Please connect MetaMask!');
   }
