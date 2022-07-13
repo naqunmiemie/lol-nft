@@ -3,14 +3,14 @@
   "proxies": [
     {
       "address": "0x133e47014Ea60F8f9B38e3062672a1bD54734D42",
-      "txHash": "0x68bc50109d2c1103c51bc5b2db5bccb98e6f39c1bc55cbb03777beb138c0410e",
+      "txHash": "0x12ade62dcf2b7a7db215d35212811f6cb03fbe97c50568e647570319b0c95d17",
       "kind": "uups"
     }
   ],
   "impls": {
-    "575c95c38dae8f1512e1a3562b429f915d5ffa7e465598a76635d1b7da309f7e": {
+    "a19e27c19ce01cc6f62847931654135fbeb64aeaf00c72f403ef43ba7208517e": {
       "address": "0xE9d79cEA29b28A22C710Ef1A91488913A2894D1f",
-      "txHash": "0xde0fc82eb5169ae20e0c71e7a7429103933490e8a9aa1d4f057edf962091dc69",
+      "txHash": "0xb2b6c539892c8b6d349a0aa517ebf07d31643cbfd1ebe4796a37c383b3dcaef8",
       "layout": {
         "storage": [
           {
@@ -39,89 +39,57 @@
             "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
           },
           {
-            "label": "__gap",
+            "label": "_balances",
             "offset": 0,
             "slot": "51",
-            "type": "t_array(t_uint256)50_storage",
-            "contract": "ERC165Upgradeable",
-            "src": "@openzeppelin\\contracts-upgradeable\\utils\\introspection\\ERC165Upgradeable.sol:41"
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "ERC20Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC20\\ERC20Upgradeable.sol:37"
+          },
+          {
+            "label": "_allowances",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_uint256))",
+            "contract": "ERC20Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC20\\ERC20Upgradeable.sol:39"
+          },
+          {
+            "label": "_totalSupply",
+            "offset": 0,
+            "slot": "53",
+            "type": "t_uint256",
+            "contract": "ERC20Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC20\\ERC20Upgradeable.sol:41"
           },
           {
             "label": "_name",
             "offset": 0,
-            "slot": "101",
+            "slot": "54",
             "type": "t_string_storage",
-            "contract": "ERC721Upgradeable",
-            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC721\\ERC721Upgradeable.sol:25"
+            "contract": "ERC20Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC20\\ERC20Upgradeable.sol:43"
           },
           {
             "label": "_symbol",
             "offset": 0,
-            "slot": "102",
+            "slot": "55",
             "type": "t_string_storage",
-            "contract": "ERC721Upgradeable",
-            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC721\\ERC721Upgradeable.sol:28"
-          },
-          {
-            "label": "_owners",
-            "offset": 0,
-            "slot": "103",
-            "type": "t_mapping(t_uint256,t_address)",
-            "contract": "ERC721Upgradeable",
-            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC721\\ERC721Upgradeable.sol:31"
-          },
-          {
-            "label": "_balances",
-            "offset": 0,
-            "slot": "104",
-            "type": "t_mapping(t_address,t_uint256)",
-            "contract": "ERC721Upgradeable",
-            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC721\\ERC721Upgradeable.sol:34"
-          },
-          {
-            "label": "_tokenApprovals",
-            "offset": 0,
-            "slot": "105",
-            "type": "t_mapping(t_uint256,t_address)",
-            "contract": "ERC721Upgradeable",
-            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC721\\ERC721Upgradeable.sol:37"
-          },
-          {
-            "label": "_operatorApprovals",
-            "offset": 0,
-            "slot": "106",
-            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
-            "contract": "ERC721Upgradeable",
-            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC721\\ERC721Upgradeable.sol:40"
+            "contract": "ERC20Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC20\\ERC20Upgradeable.sol:44"
           },
           {
             "label": "__gap",
             "offset": 0,
-            "slot": "107",
-            "type": "t_array(t_uint256)44_storage",
-            "contract": "ERC721Upgradeable",
-            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC721\\ERC721Upgradeable.sol:458"
-          },
-          {
-            "label": "_tokenURIs",
-            "offset": 0,
-            "slot": "151",
-            "type": "t_mapping(t_uint256,t_string_storage)",
-            "contract": "ERC721URIStorageUpgradeable",
-            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC721\\extensions\\ERC721URIStorageUpgradeable.sol:21"
-          },
-          {
-            "label": "__gap",
-            "offset": 0,
-            "slot": "152",
-            "type": "t_array(t_uint256)49_storage",
-            "contract": "ERC721URIStorageUpgradeable",
-            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC721\\extensions\\ERC721URIStorageUpgradeable.sol:79"
+            "slot": "56",
+            "type": "t_array(t_uint256)45_storage",
+            "contract": "ERC20Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC20\\ERC20Upgradeable.sol:394"
           },
           {
             "label": "_paused",
             "offset": 0,
-            "slot": "201",
+            "slot": "101",
             "type": "t_bool",
             "contract": "PausableUpgradeable",
             "src": "@openzeppelin\\contracts-upgradeable\\security\\PausableUpgradeable.sol:29"
@@ -129,7 +97,7 @@
           {
             "label": "__gap",
             "offset": 0,
-            "slot": "202",
+            "slot": "102",
             "type": "t_array(t_uint256)49_storage",
             "contract": "PausableUpgradeable",
             "src": "@openzeppelin\\contracts-upgradeable\\security\\PausableUpgradeable.sol:102"
@@ -137,7 +105,7 @@
           {
             "label": "_owner",
             "offset": 0,
-            "slot": "251",
+            "slot": "151",
             "type": "t_address",
             "contract": "OwnableUpgradeable",
             "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
@@ -145,7 +113,7 @@
           {
             "label": "__gap",
             "offset": 0,
-            "slot": "252",
+            "slot": "152",
             "type": "t_array(t_uint256)49_storage",
             "contract": "OwnableUpgradeable",
             "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:87"
@@ -153,7 +121,7 @@
           {
             "label": "__gap",
             "offset": 0,
-            "slot": "301",
+            "slot": "201",
             "type": "t_array(t_uint256)50_storage",
             "contract": "ERC1967UpgradeUpgradeable",
             "src": "@openzeppelin\\contracts-upgradeable\\proxy\\ERC1967\\ERC1967UpgradeUpgradeable.sol:211"
@@ -161,26 +129,18 @@
           {
             "label": "__gap",
             "offset": 0,
-            "slot": "351",
+            "slot": "251",
             "type": "t_array(t_uint256)50_storage",
             "contract": "UUPSUpgradeable",
             "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\UUPSUpgradeable.sol:107"
           },
           {
-            "label": "_ownerTokenIds",
+            "label": "priceEthFeed",
             "offset": 0,
-            "slot": "401",
-            "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)",
-            "contract": "ChampionNFT",
-            "src": "contracts\\ChampionNFT.sol:21"
-          },
-          {
-            "label": "_tokenIdCounter",
-            "offset": 0,
-            "slot": "402",
-            "type": "t_struct(Counter)3152_storage",
-            "contract": "ChampionNFT",
-            "src": "contracts\\ChampionNFT.sol:23"
+            "slot": "301",
+            "type": "t_contract(AggregatorV3Interface)45",
+            "contract": "LuuToken",
+            "src": "contracts\\LuuToken.sol:20"
           }
         ],
         "types": {
@@ -188,9 +148,9 @@
             "label": "address",
             "numberOfBytes": "20"
           },
-          "t_array(t_uint256)44_storage": {
-            "label": "uint256[44]",
-            "numberOfBytes": "1408"
+          "t_array(t_uint256)45_storage": {
+            "label": "uint256[45]",
+            "numberOfBytes": "1440"
           },
           "t_array(t_uint256)49_storage": {
             "label": "uint256[49]",
@@ -200,52 +160,24 @@
             "label": "uint256[50]",
             "numberOfBytes": "1600"
           },
-          "t_array(t_uint256)dyn_storage": {
-            "label": "uint256[]",
-            "numberOfBytes": "32"
-          },
           "t_bool": {
             "label": "bool",
             "numberOfBytes": "1"
           },
-          "t_mapping(t_address,t_array(t_uint256)dyn_storage)": {
-            "label": "mapping(address => uint256[])",
-            "numberOfBytes": "32"
+          "t_contract(AggregatorV3Interface)45": {
+            "label": "contract AggregatorV3Interface",
+            "numberOfBytes": "20"
           },
-          "t_mapping(t_address,t_bool)": {
-            "label": "mapping(address => bool)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_address,t_mapping(t_address,t_bool))": {
-            "label": "mapping(address => mapping(address => bool))",
+          "t_mapping(t_address,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(address => mapping(address => uint256))",
             "numberOfBytes": "32"
           },
           "t_mapping(t_address,t_uint256)": {
             "label": "mapping(address => uint256)",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_uint256,t_address)": {
-            "label": "mapping(uint256 => address)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_uint256,t_string_storage)": {
-            "label": "mapping(uint256 => string)",
-            "numberOfBytes": "32"
-          },
           "t_string_storage": {
             "label": "string",
-            "numberOfBytes": "32"
-          },
-          "t_struct(Counter)3152_storage": {
-            "label": "struct CountersUpgradeable.Counter",
-            "members": [
-              {
-                "label": "_value",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
             "numberOfBytes": "32"
           },
           "t_uint256": {

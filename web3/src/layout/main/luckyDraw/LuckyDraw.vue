@@ -3,7 +3,7 @@
     <el-row>
       <el-col v-for="(info) in championInformations" :key="info.num" :span="3">
         <el-card :body-style="{ padding: '4px' }" class="card" shadow="always">
-          <img :src=info.img class="image" />
+          <!-- <img :src=info.img class="image" /> -->
           <div style="padding: 10px">
             <div class="mod-name">{{ info.name }}</div>
             <div class="mod-title">{{ info.title }}</div>
@@ -19,18 +19,15 @@
 </template>
 
 <script lang="ts" setup>
-import { JsonRpcSigner } from '@ethersproject/providers';
 import { BigNumber, ethers } from 'ethers';
 import { ref } from 'vue';
 import { ChampionNFT } from '../../../../../contract/src/types/contracts/ChampionNFT';
-import { LuuToken } from '../../../../../contract/src/types/contracts/LuuToken';
+import { LuuTokenV2 } from '../../../../../contract/src/types/contracts/LuuTokenV2';
 import { ChampionNFT__factory } from '../../../../../contract/src/types/factories/contracts/ChampionNFT__factory';
-import { LuuToken__factory } from '../../../../../contract/src/types/factories/contracts/LuuToken__factory';
+import { LuuTokenV2__factory } from '../../../../../contract/src/types/factories/contracts/LuuTokenV2__factory';
 import { useStore } from '../../../store';
 import { ChampionInformation, getChampionInformation } from '../../../types/championInformation';
 import { ChampionNFTAddress, LuuTokenAddress } from '../../../utils/conctract/SomeAddress';
-import { getDeadline } from '../../../utils/contractHelper/permitHelper';
-import { premitTypedDate } from '../../../utils/contractHelper/typedData';
 
 
 const store = useStore()
@@ -39,9 +36,8 @@ prizePool()
 async function prizePool() {
   if (store.provider && store.signer) {
     const championNFTContract = new ethers.Contract(ChampionNFTAddress, ChampionNFT__factory.abi, store.signer) as ChampionNFT;
-    const tokenIds: BigNumber[] = await championNFTContract.getOwnerTokenIds(ChampionNFTAddress);
+    const tokenIds: BigNumber[] = await championNFTContract.getOwnerTokenIds(LuuTokenAddress);
     for (const tokenId of tokenIds) {
-      console.log(tokenId.toString());
       const championInformation = getChampionInformation(tokenId);
       championInformation.then(championInformation => {
         console.log(championInformation?.uri);
@@ -49,7 +45,6 @@ async function prizePool() {
           championInformations.value.push(championInformation)
         }
       })
-
     }
     console.log('prizePool');
   } else {
@@ -58,41 +53,11 @@ async function prizePool() {
 }
 
 async function luckyDraw() {
-  if (store.provider && store.signer && store.account) {
-    const championNFTContract = new ethers.Contract(ChampionNFTAddress, ChampionNFT__factory.abi, store.signer) as ChampionNFT;
-    const luuTokenContract = new ethers.Contract(LuuTokenAddress, LuuToken__factory.abi, store.signer) as LuuToken;
-    const nonce = await (await luuTokenContract.nonces(store.account)).toNumber();
-
-    const deadline = getDeadline();
-    const amount = 10 ** 18;
-    const chainId = (await store.provider.getNetwork()).chainId
-
-    let msgParams = premitTypedDate("LuuToken",
-      LuuTokenAddress,
-      store.account, LuuTokenAddress, amount, deadline, chainId, nonce);
-    window.ethereum.request({
-      method: 'eth_signTypedData_v4',
-      params: [store.account, msgParams],
-    }).then((result) => {
-      const sign = result.result;
-      const err = result.error;
-      console.log(sign);
-      console.log(err);
-      //  椭圆曲线签名签名的值:
-      // r = 签名的前 32 字节
-      // s = 签名的第2个32 字节
-      // v = 签名的最后一个字节
-      if (typeof sign === 'string') {
-        let r = '0x' + sign.substring(2).substring(0, 64);
-        let s = '0x' + sign.substring(2).substring(64, 128);
-        let v = '0x' + sign.substring(2).substring(128, 130);
-        championNFTContract.luckyDraw(deadline, v, r, s, {
-          from: store.account
-        }).then(() => {
-          console.log('luckyDraw');
-        })
-      }
-    })
+  console.log("luckyDraw");
+  if (store.provider && store.signer && store.account !== "") {
+    console.log("luckyDraw!!!");
+    const luuTokenContract = new ethers.Contract(LuuTokenAddress, LuuTokenV2__factory.abi, store.signer) as LuuTokenV2;
+    await luuTokenContract.luckyDraw();
   } else {
     console.log('Please connect MetaMask!');
   }

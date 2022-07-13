@@ -15,7 +15,6 @@ contract LuuToken is
     ERC20Upgradeable,
     PausableUpgradeable,
     OwnableUpgradeable,
-    ERC20PermitUpgradeable,
     UUPSUpgradeable
 {
     AggregatorV3Interface internal priceEthFeed;
@@ -25,7 +24,6 @@ contract LuuToken is
         __Pausable_init();
         __Ownable_init();
         __UUPSUpgradeable_init();
-        __ERC20Permit_init("LuuToken");
         /**
          * Network: Rinkeby
          * Aggregator: ETH/USD

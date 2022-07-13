@@ -27,6 +27,7 @@ export async function getChampionInformation(
       ChampionNFT__factory.abi,
       store.signer
     ) as ChampionNFT;
+    console.log(`tokenId:${tokenId.toString()}`);
     const uri = await championNFTContract.tokenURI(tokenId);
     let championInformation: ChampionInformation = {
       tokenId: tokenId,

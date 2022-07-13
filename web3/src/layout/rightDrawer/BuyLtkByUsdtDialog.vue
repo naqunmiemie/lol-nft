@@ -2,7 +2,7 @@
   <el-dialog v-model="store.buyLtkByUsdtDialog" title="Buy LuuToken By Usdt" width="30%">
 
     <div class="inputNumUsdt">
-      <el-input-number size="large" v-model="num" :precision="4" :step="0.0001" :min="0.0001" />
+      <el-input-number size="large" v-model="num" :precision="4" :step="1" :min="0.0001" />
     </div>
     <template #footer>
       <span class="dialog-footer">
@@ -26,7 +26,7 @@ import { LuuTokenAddress } from '../../utils/conctract/SomeAddress';
 import { UsdtAbi, UsdtAddress } from '../../utils/conctract/usdtAddrAbi';
 
 const store = useStore()
-const num = ref(0.0001)
+const num = ref(1)
 
 async function buyLtkByUsdt() {
   if (store.provider && store.signer && store.account !== "") {

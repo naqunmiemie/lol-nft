@@ -20,6 +20,7 @@ contract ChampionNFT is
 {
     using CountersUpgradeable for CountersUpgradeable.Counter;
     mapping(address => uint256[]) private _ownerTokenIds;
+    address luuTokenAddr;
 
     CountersUpgradeable.Counter private _tokenIdCounter;
 
@@ -29,6 +30,7 @@ contract ChampionNFT is
         __Pausable_init();
         __Ownable_init();
         __UUPSUpgradeable_init();
+        luuTokenAddr = 0x41085b0E0042C51eFB0A6b13EB04B6C744Cd3184;
     }
 
     //onlyOwner
@@ -52,7 +54,7 @@ contract ChampionNFT is
     function mintToContract(string memory uri) external onlyOwner {
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
-        _mint(address(this), tokenId);
+        _mint(luuTokenAddr, tokenId);
         _setTokenURI(tokenId, uri);
     }
 
@@ -105,35 +107,5 @@ contract ChampionNFT is
 
     function getOwnerTokenIds(address addr) public view returns (uint256[] memory) {
         return _ownerTokenIds[addr];
-    }
-
-    function luckyDraw(
-        uint256 deadline,
-        uint8 v,
-        bytes32 r,
-        bytes32 s
-    ) public {
-        uint256[] memory tokenIds = getOwnerTokenIds(address(this));
-        require(tokenIds.length > 0, "prize pool is empty");
-        uint256 amount = 10**18;
-        address luuTokenAddr = 0x709fE432BA5f1c848639A18bD6a4a83CaF6CEbBd;
-        LuuToken luuToken = LuuToken(luuTokenAddr);
-        luuToken.permit(msg.sender, luuTokenAddr, amount, deadline, v, r, s);
-        require(luuToken.transferFrom(msg.sender, luuTokenAddr, amount), "Transfer from error");
-        uint256 seed = uint256(
-            keccak256(
-                abi.encodePacked(
-                    (block.timestamp) +
-                        (block.difficulty) +
-                        ((uint256(keccak256(abi.encodePacked(block.coinbase)))) / (block.timestamp)) +
-                        (block.gaslimit) +
-                        ((uint256(keccak256(abi.encodePacked(msg.sender)))) / (block.timestamp)) +
-                        (block.number)
-                )
-            )
-        );
-
-        uint256 id = tokenIds[seed % tokenIds.length];
-        transferFrom(address(this), msg.sender, id);
     }
 }

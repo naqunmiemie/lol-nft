@@ -2,7 +2,7 @@
   <el-dialog v-model="store.buyLtkByEthDialog" title="Buy LuuToken By Eth" width="30%">
 
     <div class="inputNumEth">
-      <el-input-number size="large" v-model="num" :precision="4" :step="0.0001" :min="0.0001" />
+      <el-input-number size="large" v-model="num" :precision="4" :step="0.001" :min="0.0001" />
     </div>
     <template #footer>
       <span class="dialog-footer">
@@ -25,7 +25,7 @@ import { useStore } from '../../store';
 import { LuuTokenAddress } from '../../utils/conctract/SomeAddress';
 
 const store = useStore()
-const num = ref(0.0001)
+const num = ref(0.001)
 
 async function buyLtkByEth() {
   if (store.provider && store.signer && store.account !== "") {

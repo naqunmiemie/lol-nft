@@ -27,7 +27,7 @@ import type {
   OnEvent,
 } from "../common";
 
-export interface LuuTokenInterface extends utils.Interface {
+export interface LuuTokenV2Interface extends utils.Interface {
   functions: {
     "allowance(address,address)": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
@@ -39,6 +39,8 @@ export interface LuuTokenInterface extends utils.Interface {
     "getLatestPrice()": FunctionFragment;
     "increaseAllowance(address,uint256)": FunctionFragment;
     "initialize()": FunctionFragment;
+    "initializeV2()": FunctionFragment;
+    "luckyDraw()": FunctionFragment;
     "mint(address,uint256)": FunctionFragment;
     "name()": FunctionFragment;
     "owner()": FunctionFragment;
@@ -70,6 +72,8 @@ export interface LuuTokenInterface extends utils.Interface {
       | "getLatestPrice"
       | "increaseAllowance"
       | "initialize"
+      | "initializeV2"
+      | "luckyDraw"
       | "mint"
       | "name"
       | "owner"
@@ -123,6 +127,11 @@ export interface LuuTokenInterface extends utils.Interface {
     functionFragment: "initialize",
     values?: undefined
   ): string;
+  encodeFunctionData(
+    functionFragment: "initializeV2",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "luckyDraw", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "mint",
     values: [string, BigNumberish]
@@ -196,6 +205,11 @@ export interface LuuTokenInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "initializeV2",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "luckyDraw", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
@@ -346,12 +360,12 @@ export type UpgradedEvent = TypedEvent<[string], UpgradedEventObject>;
 
 export type UpgradedEventFilter = TypedEventFilter<UpgradedEvent>;
 
-export interface LuuToken extends BaseContract {
+export interface LuuTokenV2 extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: LuuTokenInterface;
+  interface: LuuTokenV2Interface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -413,6 +427,14 @@ export interface LuuToken extends BaseContract {
     ): Promise<ContractTransaction>;
 
     initialize(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    initializeV2(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    luckyDraw(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -527,6 +549,14 @@ export interface LuuToken extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  initializeV2(
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  luckyDraw(
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   mint(
     to: string,
     amount: BigNumberish,
@@ -633,6 +663,10 @@ export interface LuuToken extends BaseContract {
     ): Promise<boolean>;
 
     initialize(overrides?: CallOverrides): Promise<void>;
+
+    initializeV2(overrides?: CallOverrides): Promise<void>;
+
+    luckyDraw(overrides?: CallOverrides): Promise<void>;
 
     mint(
       to: string,
@@ -795,6 +829,14 @@ export interface LuuToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    initializeV2(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    luckyDraw(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     mint(
       to: string,
       amount: BigNumberish,
@@ -907,6 +949,14 @@ export interface LuuToken extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     initialize(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    initializeV2(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    luckyDraw(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 

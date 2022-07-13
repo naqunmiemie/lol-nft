@@ -2,4 +2,3 @@
 /* tslint:disable */
 /* eslint-disable */
 export { AggregatorV3Interface__factory } from "./AggregatorV3Interface__factory";
-export { VRFCoordinatorV2Interface__factory } from "./VRFCoordinatorV2Interface__factory";

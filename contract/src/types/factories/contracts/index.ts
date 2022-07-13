@@ -4,3 +4,4 @@
 export { ChampionNFT__factory } from "./ChampionNFT__factory";
 export { Greeter__factory } from "./Greeter__factory";
 export { LuuToken__factory } from "./LuuToken__factory";
+export { LuuTokenV2__factory } from "./LuuTokenV2__factory";
