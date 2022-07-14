@@ -20,6 +20,8 @@ contract ChampionNFT is
     using CountersUpgradeable for CountersUpgradeable.Counter;
     mapping(address => uint256[]) private _ownerTokenIds;
     address luuTokenAddr;
+    uint256[] public transactionCenterIds;
+    mapping(uint256 => uint256) public prizeById;
 
     CountersUpgradeable.Counter private _tokenIdCounter;
 
@@ -106,5 +108,32 @@ contract ChampionNFT is
 
     function getOwnerTokenIds(address addr) public view returns (uint256[] memory) {
         return _ownerTokenIds[addr];
+    }
+
+    function getTransactionCenterIds() public view returns (uint256[] memory) {
+        return transactionCenterIds;
+    }
+
+    function getPrizeById(uint256 id) public view returns (uint256) {
+        return prizeById[id];
+    }
+
+    function sellChampionNFT(uint256 id, uint256 prize) public whenNotPaused {
+        require(ownerOf(id) == msg.sender, "not owner");
+        approve(luuTokenAddr, id);
+        transactionCenterIds.push(id);
+        prizeById[id] = prize;
+    }
+
+    function updateTransactionCenterIds() public whenNotPaused {
+        uint256 len = transactionCenterIds.length;
+        for (uint256 i = 0; i < len; ++i) {
+            if (getApproved(transactionCenterIds[i]) != luuTokenAddr) {
+                transactionCenterIds[i] = transactionCenterIds[len - 1];
+                transactionCenterIds.pop();
+                --len;
+                --i;
+            }
+        }
     }
 }

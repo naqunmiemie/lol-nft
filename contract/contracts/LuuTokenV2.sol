@@ -31,4 +31,12 @@ contract LuuTokenV2 is LuuToken {
         uint256 id = tokenIds[seed % tokenIds.length];
         ChampionNFT(championAddr).transferFrom(address(this), msg.sender, id);
     }
+
+    function buyChampionNFT(uint256 id) public whenNotPaused {
+        ChampionNFT championContract = ChampionNFT(championAddr);
+        require(championContract.getApproved(id) == address(this), "approved lose efficacy");
+        address owner = championContract.ownerOf(id);
+        require(transfer(owner, championContract.getPrizeById(id)));
+        championContract.transferFrom(owner, msg.sender, id);
+    }
 }

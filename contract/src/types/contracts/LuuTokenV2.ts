@@ -32,6 +32,7 @@ export interface LuuTokenV2Interface extends utils.Interface {
     "allowance(address,address)": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
+    "buyChampionNFT(uint256)": FunctionFragment;
     "buyLuuTokenByEth()": FunctionFragment;
     "buyLuuTokenByUsdt(uint256)": FunctionFragment;
     "decimals()": FunctionFragment;
@@ -65,6 +66,7 @@ export interface LuuTokenV2Interface extends utils.Interface {
       | "allowance"
       | "approve"
       | "balanceOf"
+      | "buyChampionNFT"
       | "buyLuuTokenByEth"
       | "buyLuuTokenByUsdt"
       | "decimals"
@@ -102,6 +104,10 @@ export interface LuuTokenV2Interface extends utils.Interface {
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "buyChampionNFT",
+    values: [BigNumberish]
+  ): string;
   encodeFunctionData(
     functionFragment: "buyLuuTokenByEth",
     values?: undefined
@@ -183,6 +189,10 @@ export interface LuuTokenV2Interface extends utils.Interface {
   decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "buyChampionNFT",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "buyLuuTokenByEth",
     data: BytesLike
@@ -401,6 +411,11 @@ export interface LuuTokenV2 extends BaseContract {
 
     balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    buyChampionNFT(
+      id: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     buyLuuTokenByEth(
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -520,6 +535,11 @@ export interface LuuTokenV2 extends BaseContract {
 
   balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+  buyChampionNFT(
+    id: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   buyLuuTokenByEth(
     overrides?: PayableOverrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -638,6 +658,8 @@ export interface LuuTokenV2 extends BaseContract {
     ): Promise<boolean>;
 
     balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    buyChampionNFT(id: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
     buyLuuTokenByEth(overrides?: CallOverrides): Promise<void>;
 
@@ -800,6 +822,11 @@ export interface LuuTokenV2 extends BaseContract {
 
     balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+    buyChampionNFT(
+      id: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     buyLuuTokenByEth(
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -921,6 +948,11 @@ export interface LuuTokenV2 extends BaseContract {
     balanceOf(
       account: string,
       overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    buyChampionNFT(
+      id: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     buyLuuTokenByEth(

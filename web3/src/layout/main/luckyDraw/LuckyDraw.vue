@@ -40,8 +40,8 @@ async function prizePool() {
     for (const tokenId of tokenIds) {
       const championInformation = getChampionInformation(tokenId);
       championInformation.then(championInformation => {
-        console.log(championInformation?.uri);
         if (championInformation != null) {
+          console.log(championInformation.uri);
           championInformations.value.push(championInformation)
         }
       })

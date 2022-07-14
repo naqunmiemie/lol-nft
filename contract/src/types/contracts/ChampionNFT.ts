@@ -33,6 +33,8 @@ export interface ChampionNFTInterface extends utils.Interface {
     "balanceOf(address)": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
     "getOwnerTokenIds(address)": FunctionFragment;
+    "getPrizeById(uint256)": FunctionFragment;
+    "getTransactionCenterIds()": FunctionFragment;
     "initialize()": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "mintToContract(string)": FunctionFragment;
@@ -41,18 +43,22 @@ export interface ChampionNFTInterface extends utils.Interface {
     "ownerOf(uint256)": FunctionFragment;
     "pause()": FunctionFragment;
     "paused()": FunctionFragment;
+    "prizeById(uint256)": FunctionFragment;
     "proxiableUUID()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "safeMint(address,string)": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
     "safeTransferFrom(address,address,uint256,bytes)": FunctionFragment;
+    "sellChampionNFT(uint256,uint256)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "symbol()": FunctionFragment;
     "tokenURI(uint256)": FunctionFragment;
+    "transactionCenterIds(uint256)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "unpause()": FunctionFragment;
+    "updateTransactionCenterIds()": FunctionFragment;
     "upgradeTo(address)": FunctionFragment;
     "upgradeToAndCall(address,bytes)": FunctionFragment;
   };
@@ -63,6 +69,8 @@ export interface ChampionNFTInterface extends utils.Interface {
       | "balanceOf"
       | "getApproved"
       | "getOwnerTokenIds"
+      | "getPrizeById"
+      | "getTransactionCenterIds"
       | "initialize"
       | "isApprovedForAll"
       | "mintToContract"
@@ -71,18 +79,22 @@ export interface ChampionNFTInterface extends utils.Interface {
       | "ownerOf"
       | "pause"
       | "paused"
+      | "prizeById"
       | "proxiableUUID"
       | "renounceOwnership"
       | "safeMint"
       | "safeTransferFrom(address,address,uint256)"
       | "safeTransferFrom(address,address,uint256,bytes)"
+      | "sellChampionNFT"
       | "setApprovalForAll"
       | "supportsInterface"
       | "symbol"
       | "tokenURI"
+      | "transactionCenterIds"
       | "transferFrom"
       | "transferOwnership"
       | "unpause"
+      | "updateTransactionCenterIds"
       | "upgradeTo"
       | "upgradeToAndCall"
   ): FunctionFragment;
@@ -99,6 +111,14 @@ export interface ChampionNFTInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "getOwnerTokenIds",
     values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getPrizeById",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getTransactionCenterIds",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "initialize",
@@ -121,6 +141,10 @@ export interface ChampionNFTInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "pause", values?: undefined): string;
   encodeFunctionData(functionFragment: "paused", values?: undefined): string;
   encodeFunctionData(
+    functionFragment: "prizeById",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "proxiableUUID",
     values?: undefined
   ): string;
@@ -141,6 +165,10 @@ export interface ChampionNFTInterface extends utils.Interface {
     values: [string, string, BigNumberish, BytesLike]
   ): string;
   encodeFunctionData(
+    functionFragment: "sellChampionNFT",
+    values: [BigNumberish, BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "setApprovalForAll",
     values: [string, boolean]
   ): string;
@@ -154,6 +182,10 @@ export interface ChampionNFTInterface extends utils.Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "transactionCenterIds",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "transferFrom",
     values: [string, string, BigNumberish]
   ): string;
@@ -162,6 +194,10 @@ export interface ChampionNFTInterface extends utils.Interface {
     values: [string]
   ): string;
   encodeFunctionData(functionFragment: "unpause", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "updateTransactionCenterIds",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "upgradeTo", values: [string]): string;
   encodeFunctionData(
     functionFragment: "upgradeToAndCall",
@@ -178,6 +214,14 @@ export interface ChampionNFTInterface extends utils.Interface {
     functionFragment: "getOwnerTokenIds",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "getPrizeById",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getTransactionCenterIds",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "isApprovedForAll",
@@ -192,6 +236,7 @@ export interface ChampionNFTInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "pause", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "prizeById", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "proxiableUUID",
     data: BytesLike
@@ -210,6 +255,10 @@ export interface ChampionNFTInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "sellChampionNFT",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "setApprovalForAll",
     data: BytesLike
   ): Result;
@@ -220,6 +269,10 @@ export interface ChampionNFTInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "transactionCenterIds",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "transferFrom",
     data: BytesLike
   ): Result;
@@ -228,6 +281,10 @@ export interface ChampionNFTInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "unpause", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "updateTransactionCenterIds",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "upgradeTo", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "upgradeToAndCall",
@@ -401,6 +458,13 @@ export interface ChampionNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber[]]>;
 
+    getPrizeById(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    getTransactionCenterIds(overrides?: CallOverrides): Promise<[BigNumber[]]>;
+
     initialize(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -431,6 +495,11 @@ export interface ChampionNFT extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
+    prizeById(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
     proxiableUUID(overrides?: CallOverrides): Promise<[string]>;
 
     renounceOwnership(
@@ -458,6 +527,12 @@ export interface ChampionNFT extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    sellChampionNFT(
+      id: BigNumberish,
+      prize: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     setApprovalForAll(
       operator: string,
       approved: boolean,
@@ -476,6 +551,11 @@ export interface ChampionNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
+    transactionCenterIds(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
     transferFrom(
       from: string,
       to: string,
@@ -489,6 +569,10 @@ export interface ChampionNFT extends BaseContract {
     ): Promise<ContractTransaction>;
 
     unpause(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    updateTransactionCenterIds(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -522,6 +606,10 @@ export interface ChampionNFT extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber[]>;
 
+  getPrizeById(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+  getTransactionCenterIds(overrides?: CallOverrides): Promise<BigNumber[]>;
+
   initialize(
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -548,6 +636,8 @@ export interface ChampionNFT extends BaseContract {
   ): Promise<ContractTransaction>;
 
   paused(overrides?: CallOverrides): Promise<boolean>;
+
+  prizeById(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
   proxiableUUID(overrides?: CallOverrides): Promise<string>;
 
@@ -576,6 +666,12 @@ export interface ChampionNFT extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  sellChampionNFT(
+    id: BigNumberish,
+    prize: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   setApprovalForAll(
     operator: string,
     approved: boolean,
@@ -591,6 +687,11 @@ export interface ChampionNFT extends BaseContract {
 
   tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
+  transactionCenterIds(
+    arg0: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   transferFrom(
     from: string,
     to: string,
@@ -604,6 +705,10 @@ export interface ChampionNFT extends BaseContract {
   ): Promise<ContractTransaction>;
 
   unpause(
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  updateTransactionCenterIds(
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -637,6 +742,13 @@ export interface ChampionNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber[]>;
 
+    getPrizeById(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getTransactionCenterIds(overrides?: CallOverrides): Promise<BigNumber[]>;
+
     initialize(overrides?: CallOverrides): Promise<void>;
 
     isApprovedForAll(
@@ -656,6 +768,11 @@ export interface ChampionNFT extends BaseContract {
     pause(overrides?: CallOverrides): Promise<void>;
 
     paused(overrides?: CallOverrides): Promise<boolean>;
+
+    prizeById(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     proxiableUUID(overrides?: CallOverrides): Promise<string>;
 
@@ -678,6 +795,12 @@ export interface ChampionNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    sellChampionNFT(
+      id: BigNumberish,
+      prize: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     setApprovalForAll(
       operator: string,
       approved: boolean,
@@ -693,6 +816,11 @@ export interface ChampionNFT extends BaseContract {
 
     tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
+    transactionCenterIds(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     transferFrom(
       from: string,
       to: string,
@@ -706,6 +834,8 @@ export interface ChampionNFT extends BaseContract {
     ): Promise<void>;
 
     unpause(overrides?: CallOverrides): Promise<void>;
+
+    updateTransactionCenterIds(overrides?: CallOverrides): Promise<void>;
 
     upgradeTo(
       newImplementation: string,
@@ -808,6 +938,13 @@ export interface ChampionNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    getPrizeById(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getTransactionCenterIds(overrides?: CallOverrides): Promise<BigNumber>;
+
     initialize(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -838,6 +975,11 @@ export interface ChampionNFT extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
+    prizeById(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     proxiableUUID(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(
@@ -865,6 +1007,12 @@ export interface ChampionNFT extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    sellChampionNFT(
+      id: BigNumberish,
+      prize: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     setApprovalForAll(
       operator: string,
       approved: boolean,
@@ -883,6 +1031,11 @@ export interface ChampionNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    transactionCenterIds(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     transferFrom(
       from: string,
       to: string,
@@ -896,6 +1049,10 @@ export interface ChampionNFT extends BaseContract {
     ): Promise<BigNumber>;
 
     unpause(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    updateTransactionCenterIds(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -933,6 +1090,15 @@ export interface ChampionNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    getPrizeById(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getTransactionCenterIds(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     initialize(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
@@ -963,6 +1129,11 @@ export interface ChampionNFT extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    prizeById(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     proxiableUUID(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(
@@ -990,6 +1161,12 @@ export interface ChampionNFT extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    sellChampionNFT(
+      id: BigNumberish,
+      prize: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     setApprovalForAll(
       operator: string,
       approved: boolean,
@@ -1008,6 +1185,11 @@ export interface ChampionNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    transactionCenterIds(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     transferFrom(
       from: string,
       to: string,
@@ -1021,6 +1203,10 @@ export interface ChampionNFT extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     unpause(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    updateTransactionCenterIds(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 

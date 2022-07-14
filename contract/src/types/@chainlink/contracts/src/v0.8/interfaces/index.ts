@@ -2,4 +2,3 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { AggregatorV3Interface } from "./AggregatorV3Interface";
-export type { VRFCoordinatorV2Interface } from "./VRFCoordinatorV2Interface";
