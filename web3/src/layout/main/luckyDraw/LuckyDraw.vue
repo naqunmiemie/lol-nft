@@ -3,7 +3,7 @@
     <el-row>
       <el-col v-for="(info) in championInformations" :key="info.num" :span="3">
         <el-card :body-style="{ padding: '4px' }" class="card" shadow="always">
-          <!-- <img :src=info.img class="image" /> -->
+          <img :src=info.img class="image" />
           <div style="padding: 10px">
             <div class="mod-name">{{ info.name }}</div>
             <div class="mod-title">{{ info.title }}</div>
@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts" setup>
-import { BigNumber, ethers, PayableOverrides } from 'ethers';
+import { BigNumber, ethers } from 'ethers';
 import { ref } from 'vue';
 import { ChampionNFT } from '../../../../../contract/src/types/contracts/ChampionNFT';
 import { LuuTokenV2 } from '../../../../../contract/src/types/contracts/LuuTokenV2';

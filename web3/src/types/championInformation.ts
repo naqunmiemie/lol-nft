@@ -61,6 +61,7 @@ async function reptile(
   }
   if (typeof img === "string") {
     championInformation.img = baseUrl + img;
+    console.log(championInformation.img);
   }
   return championInformation;
 }

@@ -2229,7 +2229,7 @@
             "slot": "401",
             "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)",
             "contract": "ChampionNFT",
-            "src": "contracts\\ChampionNFT.sol:22"
+            "src": "contracts\\ChampionNFT.sol:21"
           },
           {
             "label": "luuTokenAddr",
@@ -2237,7 +2237,7 @@
             "slot": "402",
             "type": "t_address",
             "contract": "ChampionNFT",
-            "src": "contracts\\ChampionNFT.sol:23"
+            "src": "contracts\\ChampionNFT.sol:22"
           },
           {
             "label": "_tokenIdCounter",
@@ -2245,7 +2245,7 @@
             "slot": "403",
             "type": "t_struct(Counter)3379_storage",
             "contract": "ChampionNFT",
-            "src": "contracts\\ChampionNFT.sol:25"
+            "src": "contracts\\ChampionNFT.sol:24"
           }
         ],
         "types": {
@@ -3992,7 +3992,7 @@
             "slot": "302",
             "type": "t_address",
             "contract": "LuuTokenV2",
-            "src": "contracts\\LuuTokenV2.sol:12"
+            "src": "contracts\\LuuTokenV2.sol:8"
           }
         ],
         "types": {
