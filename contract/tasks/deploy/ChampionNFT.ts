@@ -13,10 +13,10 @@ task("deploy:ChampionNFT").setAction(
 );
 
 
-// task("upgrade:ChampionNFT").setAction(
-//   async (taskArgs: TaskArguments, hre: HardhatRuntimeEnvironment, runSuper: RunSuperFunction<any>) => {
-//     const ChampionNFT = await hre.ethers.getContractFactory("ChampionNFT");
-//     const championNFT = await hre.upgrades.upgradeProxy(ChampionNFTAddress, ChampionNFT);
-//     console.log("ChampionNFT upgraded");
-//   },
-// );
+task("upgrade:ChampionNFT").setAction(
+  async (taskArgs: TaskArguments, hre: HardhatRuntimeEnvironment, runSuper: RunSuperFunction<any>) => {
+    const ChampionNFT = await hre.ethers.getContractFactory("ChampionNFT");
+    const championNFT = await hre.upgrades.upgradeProxy(ChampionNFTAddress, ChampionNFT);
+    console.log("ChampionNFT upgraded");
+  },
+);
