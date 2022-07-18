@@ -3,16 +3,39 @@
         <el-row>
             <el-col v-for="(info) in championInformations" :key="info.num" :span="3">
                 <el-card :body-style="{ padding: '4px' }" class="card" shadow="always">
-                    <!-- <img :src=info.img class="image" /> -->
+                    <img :src=info.img class="image" />
                     <div style="padding: 10px">
                         <div class="mod-name">{{ info.name }}</div>
                         <div class="mod-title">{{ info.title }}</div>
-                        <el-button text class="button" @click="sale(info.tokenId)">Sale</el-button>
+                        <el-button text class="button" @click="sale(info)">Sale</el-button>
                     </div>
                 </el-card>
             </el-col>
         </el-row>
     </div>
+
+    <el-dialog v-model="saleDialog" title="sale this champion" width="30%">
+        <h3>
+            <span>{{ saleChampionInformation.name }}</span>
+            <span style="padding:10px">{{ saleChampionInformation.title }}</span>
+        </h3>
+
+        <div>{{ saleChampionInformation.uri }}</div>
+
+        <el-divider />
+
+        <div>Selling Price / LuuToken</div>
+        <div class="sellingPrice">
+            <el-input-number size="large" v-model="num" :precision="4" :step="1" :min="0.0001" />
+        </div>
+
+        <template #footer>
+            <span class="dialog-footer">
+                <el-button @click="saleDialog = false">Cancel</el-button>
+                <el-button type="primary" @click="confirmSale()">Confirm</el-button>
+            </span>
+        </template>
+    </el-dialog>
 </template>
 
 <script lang="ts" setup>
@@ -23,6 +46,17 @@ import { ChampionNFT__factory } from '../../../../../contract/src/types/factorie
 import { useStore } from '../../../store';
 import { ChampionInformation, getChampionInformation } from '../../../types/championInformation';
 import { ChampionNFTAddress } from '../../../utils/conctract/SomeAddress';
+
+const saleDialog = ref(false)
+const num = ref(1)
+const saleChampionInformation = ref<ChampionInformation>({
+    tokenId: BigNumber.from("0"),
+    num: '',
+    uri: '',
+    name: '',
+    title: '',
+    img: ''
+})
 
 const store = useStore()
 const championInformations = ref(new Array<ChampionInformation>())
@@ -46,8 +80,23 @@ async function getYourChampions() {
     }
 }
 
-async function sale(tokenId:BigNumber) {
-    
+async function sale(championInformation: ChampionInformation) {
+    saleChampionInformation.value = championInformation;
+    saleDialog.value = true;
+}
+
+async function confirmSale() {
+    saleDialog.value = false;
+    if (store.provider && store.signer && store.account !== "") {
+        const championNFTContract = new ethers.Contract(ChampionNFTAddress, ChampionNFT__factory.abi, store.signer) as ChampionNFT;
+        await championNFTContract.sellChampionNFT(saleChampionInformation.value.tokenId, num.value * (10 ** 18));
+
+        console.log('confirmSale');
+    } else {
+        console.log('Please connect MetaMask!');
+    }
+
+
 }
 
 </script>
