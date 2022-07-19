@@ -20,10 +20,9 @@ contract ChampionNFT is
     using CountersUpgradeable for CountersUpgradeable.Counter;
     mapping(address => uint256[]) private _ownerTokenIds;
     address luuTokenAddr;
+    CountersUpgradeable.Counter private _tokenIdCounter;
     uint256[] public transactionCenterIds;
     mapping(uint256 => uint256) public prizeById;
-
-    CountersUpgradeable.Counter private _tokenIdCounter;
 
     function initialize() public initializer {
         __ERC721_init("ChampionNFT", "ChampionNFT");
@@ -122,6 +121,24 @@ contract ChampionNFT is
         require(ownerOf(id) == msg.sender, "not owner");
         approve(luuTokenAddr, id);
         transactionCenterIds.push(id);
+        prizeById[id] = prize;
+    }
+
+    function test1(uint256 id) public view whenNotPaused returns (string memory) {
+        require(ownerOf(id) == msg.sender, "not owner");
+        return "yes";
+    }
+
+    function test2(uint256 id) public whenNotPaused {
+        approve(luuTokenAddr, id);
+    }
+
+    function test3(uint256 id) public whenNotPaused returns (uint256[] memory) {
+        transactionCenterIds.push(id);
+        return transactionCenterIds;
+    }
+
+    function test4(uint256 id, uint256 prize) public whenNotPaused {
         prizeById[id] = prize;
     }
 

@@ -16,11 +16,11 @@ import type { Greeter__factory } from "../../src/types/factories/contracts/Greet
 //     console.log("Greeter deployed to: ", greeter.address);
 //   });
 
-task("deploy:Greeter").setAction(
-  async (taskArgs: TaskArguments, hre: HardhatRuntimeEnvironment, runSuper: RunSuperFunction<any>) => {
-    const Greeter = await hre.ethers.getContractFactory("Greeter") as Greeter__factory;
-    const greeter = await hre.upgrades.deployProxy(Greeter) as Greeter;
-    await greeter.deployed();
-    console.log("Greeter deployed to:", greeter.address);
-  },
-);
+// task("deploy:Greeter").setAction(
+//   async (taskArgs: TaskArguments, hre: HardhatRuntimeEnvironment, runSuper: RunSuperFunction<any>) => {
+//     const Greeter = await hre.ethers.getContractFactory("Greeter") as Greeter__factory;
+//     const greeter = await hre.upgrades.deployProxy(Greeter) as Greeter;
+//     await greeter.deployed();
+//     console.log("Greeter deployed to:", greeter.address);
+//   },
+// );

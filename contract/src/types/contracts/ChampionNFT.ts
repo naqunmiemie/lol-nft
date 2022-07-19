@@ -53,6 +53,10 @@ export interface ChampionNFTInterface extends utils.Interface {
     "setApprovalForAll(address,bool)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "symbol()": FunctionFragment;
+    "test1(uint256)": FunctionFragment;
+    "test2(uint256)": FunctionFragment;
+    "test3(uint256)": FunctionFragment;
+    "test4(uint256,uint256)": FunctionFragment;
     "tokenURI(uint256)": FunctionFragment;
     "transactionCenterIds(uint256)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
@@ -89,6 +93,10 @@ export interface ChampionNFTInterface extends utils.Interface {
       | "setApprovalForAll"
       | "supportsInterface"
       | "symbol"
+      | "test1"
+      | "test2"
+      | "test3"
+      | "test4"
       | "tokenURI"
       | "transactionCenterIds"
       | "transferFrom"
@@ -177,6 +185,13 @@ export interface ChampionNFTInterface extends utils.Interface {
     values: [BytesLike]
   ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
+  encodeFunctionData(functionFragment: "test1", values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: "test2", values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: "test3", values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: "test4",
+    values: [BigNumberish, BigNumberish]
+  ): string;
   encodeFunctionData(
     functionFragment: "tokenURI",
     values: [BigNumberish]
@@ -267,6 +282,10 @@ export interface ChampionNFTInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "test1", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "test2", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "test3", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "test4", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "transactionCenterIds",
@@ -546,6 +565,24 @@ export interface ChampionNFT extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
+    test1(id: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+
+    test2(
+      id: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    test3(
+      id: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    test4(
+      id: BigNumberish,
+      prize: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     tokenURI(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -685,6 +722,24 @@ export interface ChampionNFT extends BaseContract {
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
+  test1(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+  test2(
+    id: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  test3(
+    id: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  test4(
+    id: BigNumberish,
+    prize: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   transactionCenterIds(
@@ -813,6 +868,18 @@ export interface ChampionNFT extends BaseContract {
     ): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
+
+    test1(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+    test2(id: BigNumberish, overrides?: CallOverrides): Promise<void>;
+
+    test3(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber[]>;
+
+    test4(
+      id: BigNumberish,
+      prize: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
@@ -1026,6 +1093,24 @@ export interface ChampionNFT extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
+    test1(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+    test2(
+      id: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    test3(
+      id: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    test4(
+      id: BigNumberish,
+      prize: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     tokenURI(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -1179,6 +1264,27 @@ export interface ChampionNFT extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    test1(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    test2(
+      id: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    test3(
+      id: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    test4(
+      id: BigNumberish,
+      prize: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
     tokenURI(
       tokenId: BigNumberish,

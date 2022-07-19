@@ -29,6 +29,8 @@ export async function getChampionInformation(
     ) as ChampionNFT;
     console.log(`tokenId:${tokenId.toString()}`);
     const uri = await championNFTContract.tokenURI(tokenId);
+    console.log(`tokenUri:${uri}`);
+
     let championInformation: ChampionInformation = {
       tokenId: tokenId,
       num: tokenId.toString(),
@@ -55,13 +57,16 @@ async function reptile(
   const img = root(".sd-btn.splash-btn.menu-box").find("a").attr("href");
   if (typeof title === "string") {
     championInformation.title = title;
+    console.log(championInformation.num+"title:"+championInformation.title);
   }
   if (typeof name === "string") {
     championInformation.name = name;
+    console.log(championInformation.num+"name:"+championInformation.name);
   }
   if (typeof img === "string") {
     championInformation.img = baseUrl + img;
-    console.log(championInformation.img);
+    console.log(championInformation.num+"img:"+championInformation.img);
   }
+
   return championInformation;
 }

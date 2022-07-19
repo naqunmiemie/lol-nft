@@ -1,3 +1,4 @@
+import { BigNumber } from "ethers";
 export function decimals18todecimals4(num: string): string {
   const decimals = 18;
   const toDecimals = 4;
@@ -19,4 +20,8 @@ export function decimals18todecimals4(num: string): string {
     num = "0.0000";
   }
   return num;
+}
+
+export function numToDecimals18BN(num: number): BigNumber {
+  return BigNumber.from(String(num * 10 ** 18));
 }

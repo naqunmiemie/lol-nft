@@ -24,6 +24,7 @@ import { LuuToken__factory } from '../../../../contract/src/types/factories/cont
 import { useStore } from '../../store';
 import { LuuTokenAddress } from '../../utils/conctract/SomeAddress';
 import { UsdtAbi, UsdtAddress } from '../../utils/conctract/usdtAddrAbi';
+import { numToDecimals18BN } from '../../utils/math';
 
 const store = useStore()
 const num = ref(1)
@@ -39,7 +40,7 @@ async function buyLtkByUsdt() {
         await luuTokenContract.buyLuuTokenByUsdt(value)
       }
     });
-    await usdtContract.approve(LuuTokenAddress, num.value * (10 ** 18))
+    await usdtContract.approve(LuuTokenAddress, numToDecimals18BN(num.value))
   } else {
     console.log('Please connect MetaMask!');
   }

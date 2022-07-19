@@ -78,8 +78,6 @@ export type { IERC165 } from "./@openzeppelin/contracts/utils/introspection/IERC
 export { IERC165__factory } from "./factories/@openzeppelin/contracts/utils/introspection/IERC165__factory";
 export type { ChampionNFT } from "./contracts/ChampionNFT";
 export { ChampionNFT__factory } from "./factories/contracts/ChampionNFT__factory";
-export type { Greeter } from "./contracts/Greeter";
-export { Greeter__factory } from "./factories/contracts/Greeter__factory";
 export type { LuuToken } from "./contracts/LuuToken";
 export { LuuToken__factory } from "./factories/contracts/LuuToken__factory";
 export type { LuuTokenV2 } from "./contracts/LuuTokenV2";

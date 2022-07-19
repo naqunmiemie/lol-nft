@@ -5,6 +5,7 @@
                 <el-card :body-style="{ padding: '4px' }" class="card" shadow="always">
                     <img :src=info.img class="image" />
                     <div style="padding: 10px">
+                        <div class="mod-num">{{ info.num }}</div>
                         <div class="mod-name">{{ info.name }}</div>
                         <div class="mod-title">{{ info.title }}</div>
                         <el-button text class="button" @click="sale(info)">Sale</el-button>
@@ -14,7 +15,7 @@
         </el-row>
     </div>
 
-    <el-dialog v-model="saleDialog" title="sale this champion" width="30%">
+    <el-dialog v-model="saleDialog" title="Sale this champion" width="30%">
         <h3>
             <span>{{ saleChampionInformation.name }}</span>
             <span style="padding:10px">{{ saleChampionInformation.title }}</span>
@@ -46,6 +47,7 @@ import { ChampionNFT__factory } from '../../../../../contract/src/types/factorie
 import { useStore } from '../../../store';
 import { ChampionInformation, getChampionInformation } from '../../../types/championInformation';
 import { ChampionNFTAddress } from '../../../utils/conctract/SomeAddress';
+import { numToDecimals18BN } from '../../../utils/math';
 
 const saleDialog = ref(false)
 const num = ref(1)
@@ -69,7 +71,6 @@ async function getYourChampions() {
             const championInformation = getChampionInformation(tokenId);
             championInformation.then(championInformation => {
                 if (championInformation != null) {
-                    console.log(championInformation.uri);
                     championInformations.value.push(championInformation)
                 }
             })
@@ -80,23 +81,20 @@ async function getYourChampions() {
     }
 }
 
-async function sale(championInformation: ChampionInformation) {
+function sale(championInformation: ChampionInformation) {
     saleChampionInformation.value = championInformation;
     saleDialog.value = true;
 }
 
 async function confirmSale() {
-    saleDialog.value = false;
     if (store.provider && store.signer && store.account !== "") {
         const championNFTContract = new ethers.Contract(ChampionNFTAddress, ChampionNFT__factory.abi, store.signer) as ChampionNFT;
-        await championNFTContract.sellChampionNFT(saleChampionInformation.value.tokenId, num.value * (10 ** 18));
-
+        await championNFTContract.sellChampionNFT(saleChampionInformation.value.tokenId, numToDecimals18BN(num.value));
         console.log('confirmSale');
     } else {
         console.log('Please connect MetaMask!');
     }
-
-
+    saleDialog.value = false;
 }
 
 </script>
