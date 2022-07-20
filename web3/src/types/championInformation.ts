@@ -54,19 +54,20 @@ async function reptile(
   const root = cheerio.load(text);
   const name = root(".mod-name").find("a").html();
   const title = root(".mod-title").find("a").html();
-  const img = root(".sd-btn.splash-btn.menu-box").find("a").attr("href");
+  const img = root(".sd-btn.splash-btn").find("a").attr("href");
   if (typeof title === "string") {
     championInformation.title = title;
-    console.log(championInformation.num+"title:"+championInformation.title);
+    console.log(championInformation.num + "title:" + championInformation.title);
   }
   if (typeof name === "string") {
     championInformation.name = name;
-    console.log(championInformation.num+"name:"+championInformation.name);
+    console.log(championInformation.num + "name:" + championInformation.name);
   }
   if (typeof img === "string") {
     championInformation.img = baseUrl + img;
-    console.log(championInformation.num+"img:"+championInformation.img);
+    console.log(championInformation.num + "img:" + championInformation.img);
   }
 
   return championInformation;
 }
+
