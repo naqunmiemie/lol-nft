@@ -118,38 +118,28 @@ contract ChampionNFT is
     }
 
     function sellChampionNFT(uint256 id, uint256 prize) public whenNotPaused {
-        require(ownerOf(id) == msg.sender, "not owner");
         approve(luuTokenAddr, id);
-        transactionCenterIds.push(id);
-        prizeById[id] = prize;
-    }
-
-    function test1(uint256 id) public view whenNotPaused returns (string memory) {
-        require(ownerOf(id) == msg.sender, "not owner");
-        return "yes";
-    }
-
-    function test2(uint256 id) public whenNotPaused {
-        approve(luuTokenAddr, id);
-    }
-
-    function test3(uint256 id) public whenNotPaused returns (uint256[] memory) {
-        transactionCenterIds.push(id);
-        return transactionCenterIds;
-    }
-
-    function test4(uint256 id, uint256 prize) public whenNotPaused {
+        for (uint256 index = 0; index < transactionCenterIds.length; ++index) {
+            if (transactionCenterIds[index] == id) {
+                break;
+            }
+            if (index == transactionCenterIds.length - 1) {
+                transactionCenterIds.push(id);
+            }
+        }
         prizeById[id] = prize;
     }
 
     function updateTransactionCenterIds() public whenNotPaused {
         uint256 len = transactionCenterIds.length;
-        for (uint256 i = 0; i < len; ++i) {
+        uint256 i = 0;
+        while (i < len) {
             if (getApproved(transactionCenterIds[i]) != luuTokenAddr) {
                 transactionCenterIds[i] = transactionCenterIds[len - 1];
                 transactionCenterIds.pop();
                 --len;
-                --i;
+            } else {
+                ++i;
             }
         }
     }

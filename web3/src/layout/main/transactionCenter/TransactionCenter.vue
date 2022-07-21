@@ -33,20 +33,22 @@
         <template #footer>
             <span class="dialog-footer">
                 <el-button @click="buyDialog = false">Cancel</el-button>
-                <el-button type="primary" @click="confirmbuy()">Confirm</el-button>
+                <el-button type="primary" @click="confirmBuy()">Confirm</el-button>
             </span>
         </template>
     </el-dialog>
 </template>
 
 <script lang="ts" setup>
-import { BigNumber, ethers } from 'ethers';
+import { BigNumber, ethers, PayableOverrides } from 'ethers';
 import { ref } from 'vue';
 import { ChampionNFT } from '../../../../../contract/src/types/contracts/ChampionNFT';
+import { LuuTokenV2 } from '../../../../../contract/src/types/contracts/LuuTokenV2';
 import { ChampionNFT__factory } from '../../../../../contract/src/types/factories/contracts/ChampionNFT__factory';
+import { LuuTokenV2__factory } from '../../../../../contract/src/types/factories/contracts/LuuTokenV2__factory';
 import { useStore } from '../../../store';
 import { ChampionInformation, getChampionInformation } from '../../../types/championInformation';
-import { ChampionNFTAddress } from '../../../utils/conctract/SomeAddress';
+import { ChampionNFTAddress, LuuTokenAddress } from '../../../utils/conctract/SomeAddress';
 import { decimals18todecimals4 } from '../../../utils/math';
 
 const buyDialog = ref(false)
@@ -83,25 +85,26 @@ async function getTransactionCenter() {
 
 async function buy(championInformation: ChampionInformation) {
     buyChampionInformation.value = championInformation;
-
     buyDialog.value = true;
-
     if (store.provider && store.signer && store.account !== "") {
         const championNFTContract = new ethers.Contract(ChampionNFTAddress, ChampionNFT__factory.abi, store.signer) as ChampionNFT;
         num.value = await championNFTContract.getPrizeById(buyChampionInformation.value.tokenId);
-        console.log('confirmbuy');
     } else {
         console.log('Please connect MetaMask!');
     }
 }
 
-async function confirmbuy() {
-    if (store.provider && store.signer && store.account !== "") {
-        const championNFTContract = new ethers.Contract(ChampionNFTAddress, ChampionNFT__factory.abi, store.signer) as ChampionNFT;
-        await championNFTContract.sellChampionNFT(buyChampionInformation.value.tokenId, num.value);
-        console.log('confirmbuy');
-    } else {
-        console.log('Please connect MetaMask!');
+async function confirmBuy() {
+    try {
+        if (store.provider && store.signer && store.account !== "") {
+            const luuTokenContract = new ethers.Contract(LuuTokenAddress, LuuTokenV2__factory.abi, store.signer) as LuuTokenV2;
+            await luuTokenContract.buyChampionNFT(buyChampionInformation.value.tokenId);
+            console.log("confirmBuy");
+        } else {
+            console.log('Please connect MetaMask!');
+        }
+    } catch (error) {
+        console.log(error);
     }
     buyDialog.value = false;
 }
