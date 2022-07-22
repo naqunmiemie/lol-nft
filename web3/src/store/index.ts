@@ -2,6 +2,7 @@ import { JsonRpcSigner, Web3Provider } from "@ethersproject/providers";
 import { defineStore } from "pinia";
 import { decimals18todecimals4 } from "../utils/math";
 import { getContractStateStr } from "../utils/util";
+import { skinList } from '../static/skins';
 export const APP_STORE = "app";
 
 export const useStore = defineStore(APP_STORE, {
@@ -20,6 +21,7 @@ export const useStore = defineStore(APP_STORE, {
     ownerUsdtBalance: "",
     luuTokenContractState: false,
     championNFTContractState: false,
+    skinMap: "",
   }),
   getters: {
     luuTokenBalanceStr: (state) => decimals18todecimals4(state.luuTokenBalance),
@@ -34,3 +36,8 @@ export const useStore = defineStore(APP_STORE, {
       getContractStateStr(state.championNFTContractState),
   },
 });
+
+export function getSkinMap() {
+  skinList
+  
+}
