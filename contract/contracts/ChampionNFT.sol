@@ -119,12 +119,16 @@ contract ChampionNFT is
 
     function sellChampionNFT(uint256 id, uint256 prize) public whenNotPaused {
         approve(luuTokenAddr, id);
-        for (uint256 index = 0; index < transactionCenterIds.length; ++index) {
-            if (transactionCenterIds[index] == id) {
-                break;
-            }
-            if (index == transactionCenterIds.length - 1) {
-                transactionCenterIds.push(id);
+        if (transactionCenterIds.length == 0) {
+            transactionCenterIds.push(id);
+        } else {
+            for (uint256 index = 0; index < transactionCenterIds.length; ++index) {
+                if (transactionCenterIds[index] == id) {
+                    break;
+                }
+                if (index == transactionCenterIds.length - 1) {
+                    transactionCenterIds.push(id);
+                }
             }
         }
         prizeById[id] = prize;

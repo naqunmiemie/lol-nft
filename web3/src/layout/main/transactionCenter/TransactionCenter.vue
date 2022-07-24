@@ -5,7 +5,7 @@
                 <el-card :body-style="{ padding: '4px' }" class="card" shadow="always">
                     <img :src=info.img class="image" />
                     <div style="padding: 10px">
-                        <!-- <div class="mod-num">{{ info.num }}</div> -->
+                        <div class="mod-num">{{ info.num }}</div>
                         <div class="mod-name">{{ info.name }}</div>
                         <div class="mod-title">{{ info.title }}</div>
                         <el-button text class="button" @click="buy(info)">Buy</el-button>

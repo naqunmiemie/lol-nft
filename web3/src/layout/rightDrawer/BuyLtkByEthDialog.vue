@@ -16,7 +16,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ElMessage } from 'element-plus';
 import { ethers, PayableOverrides, utils } from 'ethers';
 import { ref } from 'vue';
 import { LuuToken } from '../../../../contract/src/types/contracts/LuuToken';

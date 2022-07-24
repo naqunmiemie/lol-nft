@@ -1,6 +1,6 @@
 <template>
   <div class="logo">
-    <img src="../../assets/logo.png" alt="logo" />
+    <img src="@/assets/logo.png" alt="logo" />
     <span class="title">LuuToken</span>
   </div>
 </template>

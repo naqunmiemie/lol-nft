@@ -42,7 +42,6 @@ async function prizePool() {
       const championInformation = getChampionInformation(tokenId);
       championInformation.then(championInformation => {
         if (championInformation != null) {
-          console.log(championInformation.uri);
           championInformations.value.push(championInformation)
         }
       })
@@ -55,7 +54,6 @@ async function prizePool() {
 
 async function luckyDraw() {
   if (store.provider && store.signer && store.account !== "") {
-
     const luuTokenContract = new ethers.Contract(LuuTokenAddress, LuuTokenV2__factory.abi, store.signer) as LuuTokenV2;
     await luuTokenContract.luckyDraw();
     console.log("luckyDraw");

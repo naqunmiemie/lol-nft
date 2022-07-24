@@ -81,7 +81,6 @@ function mintNFT() {
             type: 'info',
         }
     ).then(() => {
-        console.log("ok");
         mintChampionNFT()
     }).catch(() => {
         console.log("No");
