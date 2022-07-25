@@ -19,7 +19,7 @@ contract ChampionNFT is
 {
     using CountersUpgradeable for CountersUpgradeable.Counter;
     mapping(address => uint256[]) private _ownerTokenIds;
-    address luuTokenAddr;
+    address public luuTokenAddr;
     CountersUpgradeable.Counter private _tokenIdCounter;
     uint256[] public transactionCenterIds;
     mapping(uint256 => uint256) public prizeById;

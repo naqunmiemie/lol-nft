@@ -5,7 +5,7 @@ import "./LuuToken.sol";
 import "./ChampionNFT.sol";
 
 contract LuuTokenV2 is LuuToken {
-    address championAddr;
+    address public championAddr;
 
     function initializeV2() public reinitializer(2) {
         championAddr = 0xa98208A975808FD6aa1585179a0861d357f19142;
@@ -35,7 +35,7 @@ contract LuuTokenV2 is LuuToken {
     function buyChampionNFT(uint256 id) public whenNotPaused {
         ChampionNFT championContract = ChampionNFT(championAddr);
         address owner = championContract.ownerOf(id);
-        require(transfer(owner, championContract.getPrizeById(id)));
+        require(transfer(owner, championContract.getPrizeById(id)), "transfer error");
         championContract.transferFrom(owner, msg.sender, id);
         championContract.updateTransactionCenterIds();
     }
