@@ -10,13 +10,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/draft-ERC20PermitUpgradeable.sol";
 
-contract LuuToken is
-    Initializable,
-    ERC20Upgradeable,
-    PausableUpgradeable,
-    OwnableUpgradeable,
-    UUPSUpgradeable
-{
+contract LuuToken is Initializable, ERC20Upgradeable, PausableUpgradeable, OwnableUpgradeable, UUPSUpgradeable {
     AggregatorV3Interface internal priceEthFeed;
 
     function initialize() public initializer {
