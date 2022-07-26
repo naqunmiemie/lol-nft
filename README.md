@@ -3,7 +3,7 @@
 ## Function Introduction
 功能介绍
 
-包含ERC20和ERC721，主要功能有兑换token，抽取英雄，购买英雄，出售英雄等功能。
+LuuToken合约使用ERC20协议，ChampionNFT合约使用ERC721协议，主要功能有兑换token，抽取英雄，购买英雄，出售英雄等功能。
 
 功能以及合约结构示意图如下：
 
