@@ -2,10 +2,13 @@
 
 ## Function Introduction
 功能介绍
+
 包含ERC20和ERC721，主要功能有兑换token，抽取英雄，购买英雄，出售英雄等功能。
 
 功能以及合约结构示意图如下：
+
 https://www.figma.com/file/Pz8SwM6pyeMQjV5LM4QlmY/LOL_NFT?node-id=0%3A1
+
 ![](introduce/function.png)
 
 ## Technology Introduction
