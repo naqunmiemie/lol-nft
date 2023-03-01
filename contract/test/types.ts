@@ -2,6 +2,7 @@ import type { SignerWithAddress } from "@nomiclabs/hardhat-ethers/dist/src/signe
 import type { Fixture } from "ethereum-waffle";
 
 import type { Greeter } from "../src/types/contracts/Greeter";
+import type { Airdrop } from "../src/types/contracts/Airdrop";
 
 declare module "mocha" {
   export interface Context {
@@ -10,6 +11,7 @@ declare module "mocha" {
     signers: Signers;
   }
 }
+
 
 export interface Signers {
   admin: SignerWithAddress;

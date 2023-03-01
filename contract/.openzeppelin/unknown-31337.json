@@ -140,7 +140,7 @@
             "slot": "301",
             "type": "t_contract(AggregatorV3Interface)45",
             "contract": "LuuToken",
-            "src": "contracts\\LuuToken.sol:20"
+            "src": "contracts\\LuuToken.sol:14"
           }
         ],
         "types": {
