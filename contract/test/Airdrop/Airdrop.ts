@@ -1,10 +1,11 @@
 import { expect } from "chai";
 import { Signer, utils } from "ethers";
 import { ethers } from "hardhat";
+
 import keccak256 from "keccak256";
 import MerkleTree from "merkletreejs";
 
-import type { Airdrop } from "../../src/types/contracts/Airdrop";
+import { Airdrop } from "../../src/types/contracts/Airdrop";
 import { Ming } from "../../src/types/contracts/Ming";
 
 var owner: Signer; //管理员
